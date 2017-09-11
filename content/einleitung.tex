@@ -1,7 +1,7 @@
 % !TeX spellcheck = de_DE
 
 \chapter{Introduction}
-The development of modern day software is becoming an increasingly complex activity which warrants extensive research in the field of Software Engineering. According to IEEE Standards, Software Engineering is described as application of a systematic, closely controlled, proven approach to the development, operation and maintenance of software. Along these lines, several methodologies were introduced to reduce the cost and time of software development and to improve the quality of software product. Most of the current research in the field of Software Engineering focuses on some of these objectives and this thesis also tries to address one such purpose.
+The development of modern day software is becoming an increasingly complex activity which warrants extensive research in the field of Software Engineering. According to IEEE Standards, Software Engineering is described as application of a systematic, closely controlled, proven approach to the development, operation and maintenance of software. Along these lines, several methodologies were introduced to reduce the cost and time of software devel and to improve the quality of software product. Most of the current research in the field of Software Engineering focuses on some of these objectives and this thesis also tries to address one such purpose.
 
 The first half of this chapter illustrates the motivation behind the thesis work, the problem statement and the proposed solution. The second half illustrates how the thesis is planned and managed along with the organization of the thesis report.
 \section{Motivation}
@@ -11,9 +11,9 @@ Software Testing is one of the salient steps in the software development lifecyc
 \subsection{Agile Perspective}
 Agile software development processes \cite{ambler2009agile} were introduced to keep up with the fast changing marketplace along with the view to support frequent changes in requirements, stakeholder involvement and their priorities and finally quality products with shorter deadlines. Agile development processes have shown greater success rate than traditional software development processes in industry and hence had become an inevitable term in the current software industry. In order to ensure quality products within a shorter development lifecycle, development and testing are done parallel. As requirements changes are frequent in an agile process, the need to change test cases also becomes necessary which when performed manually is time consuming and extensive. Hence an automated process of test case generation plays a huge role in agile development process.
 \subsection{Model Based Testing Perspective}
-Automatic test case generation has been the topic of study in software engineering for quite a long period. But most of the already proposed approaches need customized artifacts as input for test case generation. For example, \gls{mbt} is one approach in which models of system under test is used for test case generation.  The functional behavior of the system is modeled in any formal specification notations [2] which are then used for the generation of test scenarios and test oracles. The most common artifact used in such cases is the UML models that capture the behavioral or functional aspect of the system. Many approaches require the requirement specifications to be modeled as \glsunset{uml} behavioral models like state charts [3], activity diagrams [4] and sequence diagrams [5].  But these approaches when applied in complex industrial projects require the presence of precise behavioral models representing the system. This again is complex and time consuming process which defeats our core purpose. \gls{mbt} also becomes absurd when an industry never uses formal models in its software development life cycle.  Hence the best approach would be to generate test cases directly from requirement specifications without the need for manual creation of any input artifacts.
+Automatic test case generation has been the topic of study in software engineering for quite a long period. But most of the already proposed approaches need customized artifacts as input for test case generation. For example, \gls{mbt} is one approach in which models of system under test is used for test case generation.  The functional behavior of the system is modeled in any formal specification notations \cite{carvalho2013test} which are then used for the generation of test scenarios and test oracles. The most common artifact used in such cases is the UML models that capture the behavioral or functional aspect of the system. Many approaches require the requirement specifications to be modeled as \glsunset{uml} behavioral models like state charts \cite{ryser1999scenario}, activity diagrams [4] and sequence diagrams [5].  But these approaches when applied in complex industrial projects require the presence of precise behavioral models representing the system. This again is complex and time consuming process which defeats our core purpose. \glspl{mbt} also becomes absurd when an industry never uses formal models in its software development life cycle.  Hence the best approach would be to generate test cases directly from requirement specifications without the need for manual creation of any input artifacts.
 \section{Problem Statement}
-Software testing is a challenging, time consuming and expensive process in \gls{sdlc}. The process of software testing consists of creation of test cases, test execution and test evaluation. In the mentioned processes, test execution and evaluation is relatively easy and simple whereas creation of test cases utilizes nearly 40 – 70 of the total effort spent on testing [6]. This is because while test execution and evaluation can be easily automated, eliciting test cases from requirements specification and deciding whether the test cases are sufficient to verify the entire system are done manually by testing experts. Such a process of manual elicitation of test cases has the following drawbacks.
+Software testing is a challenging, time consuming and expensive process in \gls{sdlc}. The process of software testing consists of creation of test cases, test execution and test evaluation. In the mentioned processes, test execution and evaluation is relatively easy and simple whereas creation of test cases utilizes nearly 40 – 70 \% of the total effort spent on testing [6]. This is because while test execution and evaluation can be easily automated, eliciting test cases from requirements specification and deciding whether the test cases are sufficient to verify the entire system are done manually by testing experts. Such a process of manual elicitation of test cases has the following drawbacks.
 \begin{enumerate}
 \item The efficiency of the process is hugely dependent on the experience of the testing experts and his knowledge on the particular domain.
 \item The process of deriving test cases is not systematic and it solely depends on the experience of the expert.
@@ -37,6 +37,54 @@ The proposed solution is to create a tool that takes the requirements specificat
 \label{fig:proposed_solution}
 \end{figure}
 
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \caption{Add caption}
+	\begin{adjustbox}{width=1\textwidth}
+    \begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \toprule
+    Element & \multicolumn{7}{l|}{ Description} \\
+    \midrule
+    Use Case Name & \multicolumn{7}{l|}{ The name of the use case. It usually starts with a verb.} \\
+    \midrule
+    Brief Description  & \multicolumn{7}{l|}{Summarizes the use case in a short paragraph.} \\
+    \midrule
+    Precondition & \multicolumn{7}{l|}{ What should be true before the use case is executed.} \\
+    \midrule
+    Primary Actor  & \multicolumn{7}{l|}{The actor which initiates the use case.} \\
+    \midrule
+    Secondary Actors & \multicolumn{7}{l|}{ Other actors the system relies on to accomplish the services of the use case.} \\
+    \midrule
+    Dependency & \multicolumn{7}{l|}{ Include and extend relationships to other use cases.} \\
+    \midrule
+    Generalization & \multicolumn{7}{l|}{ Generalization relationships to other use cases.} \\
+    \midrule
+    \multirow{3}[6]{*}{Basic Flow} & \multicolumn{7}{l|}{ Specifies the main successful path, also called “happy path.”} \\
+\cmidrule{2-8}          & \textbf{Steps (numbered) } & \multicolumn{6}{l|}{Flow of events.} \\
+\cmidrule{2-8}          & \textbf{Postcondition} & \multicolumn{6}{l|}{ What should be true after the basic flow executes.} \\
+    \midrule
+    \multicolumn{1}{|l|}{\multirow{4}[8]{*}{Specific \newline{}Alternative Flows}} & \multicolumn{7}{l|}{Applies to one specific step of the basic flow.} \\
+\cmidrule{2-8}          & \textbf{RFS} & \multicolumn{6}{l|}{ A reference flow step number where flow branches from.} \\
+\cmidrule{2-8}          & \textbf{Steps (numbered)} & \multicolumn{6}{l|}{ Flow of events.} \\
+\cmidrule{2-8}          & \textbf{Postcondition} & \multicolumn{6}{l|}{ What should be true after the alternative flow executes.} \\
+    \midrule
+    \multicolumn{1}{|l|}{\multirow{3}[6]{*}{Global Alternative\newline{} Flows}} & \multicolumn{7}{l|}{ Applies to all the steps of the basic flow.} \\
+\cmidrule{2-8}          & \textbf{Steps (numbered)} & \multicolumn{6}{l|}{ Flow of events.} \\
+\cmidrule{2-8}          & \textbf{Postcondition} & \multicolumn{6}{l|}{ What should be true after the alternative flow executes.} \\
+    \midrule
+    \multicolumn{1}{|l|}{\multirow{4}[8]{*}{Bounded \newline{}Alternative Flows}} & \multicolumn{7}{l|}{Applies to more than one step of the basic flow, but not all of them.} \\
+\cmidrule{2-8}          & \textbf{RFS} & \multicolumn{6}{l|}{ A list of reference flow steps where flow branches from.} \\
+\cmidrule{2-8}          & \textbf{Steps (numbered)} & \multicolumn{6}{l|}{ Flow of events.} \\
+\cmidrule{2-8}          & \textbf{Postcondition} & \multicolumn{6}{l|}{ What should be true after the alternative flow executes.} \\
+    \bottomrule
+    \end{tabular}%
+	\end{adjustbox}
+  \label{tab:addlabel}%
+\end{table}%
+
+
 \section{Thesis Management}
 A project plan was created in order to guarantee an organized approach to this thesis work. Various milestones were created to monitor the progress of the project with time.
 \subsection{Project Plan}
@@ -49,6 +97,9 @@ The significant phases are enlisted below.
 \item Documentation
 \end{enumerate}
 From the Gantt chart it can be seen some phases are overlapped. For example, the overall design of the approach and tool selection for implementation can be made immediately once a feasible approach has been identified in the literature survey. The identification of a suitable system and the enumeration of requirements for basic functionalities of the proposed tool can be done in parallel to the above mentioned phase.
+
+
+
 \begin{figure}[htb!]
 \centering
 \fbox{\includegraphics[width=1.05\textwidth]{content/images/figure_2_ganntchart}}
