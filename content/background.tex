@@ -1,0 +1,98 @@
+% !TeX spellcheck = de_DE
+\chapter{Background}
+This chapter gives a short introduction to topics regarding Agile processes and their definitions, Model Driven Architecture, Unified Modeling Language and Petri Nets. Basic knowledge in these topics helps us to appreciate the various design and implementation decisions taken in Chapter 3 and 4. This chapter also acts a guide to understand the various terminologies used throughout this work.
+
+\section{Evolution of Agile Software Development}
+Agile Software Development was introduced in the year 2001 by Agile Alliance to keep up with growing demands of the software industry. Traditional software development methods like Waterfall model couldn’t deliver the expected results on circumstances of frequent requirement changes and increased software complexity. The main reason that can be attributed to the failure of traditional development methods is the single flow of sequential development phases without any iterative phases.
+
+For example, in Waterfall Model, the business analyst along with the client creates a set of requirements and a model of the final product. A requirement specification document is created which acts as base document for the next development phases like Analysis, Design, Development and Testing of the product. The client is never involved during the development process and would view the product only after the final testing is completed. If the requirements of client were not captured correctly or if the client has a changed requirement now, then the entire development process has to be repeated. This kind of rework increases the cost, time and resources needed for the project and subsequently leads to its failure. (\cite{versionone}, \cite{getzephyr})
+
+Agile Software Development, on the other hand, is built on the foundation of iterative approaches, in which product development happens incrementally and stakeholder participates in the entire \gls{sdlc} from the conception to the delivery of the product. One such methodology is \textit{Sprint} in which a larger functionality is broken into smaller pieces called \textit{User Stories} which can be delivered in a time span of just two weeks. This approach has several advantages such as the time consuming documentation is replaced with face to face communication with the stakeholders reducing the misinterpretation and hence providing better understanding of stakeholder requirements.
+
+Agile also provides separate methodologies for testing which makes testing easier with a quick feedback from stakeholders. A user story is marked complete if it passes all the acceptance tests. They are then evaluated whether to retain them for regression testing. A difference in interpretation of the requirement can be found out immediately with feedback and only a small rework will be needed in case of a difference. Test team members create the test plan, write test specifications and test cases and manage the testing activities within a sprint. The testing activities can be classified as follows.
+
+\subsection{Requirements-Based Testing}
+In this testing methodology, the objective is to verify whether the deliverable’s design and code meets the application’s requirements. Hence the test cases, conditions and data are generally derived from the requirements specification document. The testing can be done to verify either the functional attributes or the non-functional attributes like performance, reliability or usability. \cite{tahat2001requirement}
+
+\subsection{Model-Based Testing}
+This methodology involves the generation of test cases from models describing the system requirements and behavior. Even though this methodology requires the building of models up-front in the development cycle, it has several advantages like finding inconsistencies in the requirements itself and detection of discrepancies even before the code is generated. \cite{dias2007survey}
+
+\subsection{Code-Based Testing}
+In this methodology, test cases are used to evaluate the code to verify whether different test paths of the system are covered. The benefits of this methodology are that the parts of the software not tested in other techniques are covered. \cite{prasanna2005survey}
+
+The main objective of this thesis is to simplify the existing test management process. As bulk of the effort is spent on elicitation and generation of test cases, this thesis aims to simplify the task of test case generation by using an automated tool. Most of the existing approaches for automated generation of test cases can be put under the above three categories. This thesis tries to automate test case generation for the first category which is Requirements-Based Testing.
+
+ 
+\subsection{Agile Perspective}
+Agile software development processes \cite{ambler2009agile} were introduced to keep up with the fast changing marketplace along with the view to support frequent changes in requirements, stakeholder involvement and their priorities and finally quality products with shorter deadlines. Agile development processes have shown greater success rate than traditional software development processes in industry and hence had become an inevitable term in the current software industry. In order to ensure quality products within a shorter development lifecycle, development and testing are done in parallel. As requirement changes are frequent in an agile process, the need to change test cases also becomes necessary which when performed manually is time consuming and extensive. Hence an automated process of test case generation plays a huge role in agile development process.
+
+\section{Model Driven Architecture}
+An important paradigm shift happened in the field of software development after the introduction of \gls{mda} by \gls{omg}.   The underlying idea of \gls{mda} is to make use of models, a key tool in engineering, for software development. In general, models can be defined as abstraction of the system and its environment. An advantage with models is that it can be used to provide different levels of abstraction, with each level highlighting specific aspects or features of the system. Hence a model is essentially a representation of the necessary characteristics of the underlying system, leaving out the rest and thus contains less complexity. Less complexity of the models provides an easy way of system behavior prediction, examination of specific properties and unambiguous communication among software developers.
+
+One of the motivations for \gls{mda} approach is that the developed software will be deployed to one or more platforms. The volatility of the platforms is higher than the higher-level models of the system and the objective of \gls{mda} is to create models that are increasingly independent of the target platform. In \gls{mda}, \glspl{pim} are initially designed in a platform independent language (e.g. \gls{uml}), which are then translated into \glspl{psm} by mapping them to some implementation language (e.g. C++, Java) as illustrated in Figure 1.
+
+A number of \gls{omg} standards such as The \gls{uml}, \gls{xmi}, \gls{cwm}, \gls{mof} form the core of \gls{mda} concepts. Among these standards, \gls{uml} is used to define the \gls{pim} models which will be discussed in detail in the section XXXX whereas the other standards are not in the scope of this thesis.
+The term \gls{mdd} or \gls{mdsd} describes the family of engineering approaches that use models and their transformations for creating software products. \gls{mdd} takes advantage of the \gls{mda} facilities, as a result of which the code can either be automatically or semi-automatically generated from models that are described in standard specification languages. The main priority of \gls{mdd} is to enable the validation of software by the end users and customer stakeholders as early as possible in \gls{sdlc}. An overview of difference between traditional and \gls{mda} based software development is shown in figure 2.
+
+
+\section{Unified Modeling Language}
+\gls{uml} is a standard from \gls{omg} and is a de-facto industry standard for modeling business applications using \gls{mdsd} \cite{cerny2015separation}. \gls{uml} models help to understand the requirements of the system graphically. They also provide aides to design the system, its components and to model the relationship existing between them right from early stages of software development. \gls{uml} also helps the developers and end users to maintain consistency in their interpretation of the design specification. \gls{uml}’s rapid gain in popularity in object oriented software development has attracted a great deal of research on \gls{uml} in software testing. [cite papers]
+
+\gls{uml} can be classified broadly into two categories namely structural and behavioral models. The structural diagrams represent the static structure of the system and the relationship between them. The different structural diagrams represent different abstraction and implementation levels. On the other hand, behavioral diagrams represent the dynamic behavior of the objects in the system i.e. the changes that happens in the system over time. Some of the important \gls{uml} diagrams which are used in upcoming sections are elaborated below.
+
+Class Diagram is one example of structural diagrams that acts as a blueprint of the system or subsystem under development. It is extensively used to model the objects that make up the system, the relationship between them, their description and the functions they provide. Class Diagrams usage is across different levels in the development cycle. In analysis stage, it is used to understand the requirements of the problem domain whereas in implementation stage, it can be used to create actual software classes. An example of Class Diagram is shown in Figure 3 (a).
+
+Activity Diagram is one example of behavioral diagrams which illustrates the sequence of actions in a process. Activity Diagrams usage across different levels in the development cycle are illustrated below. In requirements stage, it can be used to model the flow of events that the use cases describe and in design and implementation stage, it can be used to define the behavior of operations. An example of Activity Diagram is shown in Figure 3 (b).
+
+\section{Petri Net}
+Petri Net is a graphical and mathematical modeling tool with well defined semantics suitable for formal analysis. The concept of Petri Net was first introduced by Carl Adam Petri in the year 1961, after which it had grown tremendously to support different domains like workflow management, manufacturing, real time systems, distributed systems, embedded systems, protocols and networks, performance evaluation and much more. 
+In the domain of computer science engineering, Petri nets are mainly used in information processing systems that can categorized as parallel, concurrent, distributed, asynchronous, non-deterministic and stochastic. Petri nets can be used as communication documents like flow charts, block diagrams and networks but can also simulate the dynamic and concurrent activities of the system with the concept of tokens. Also, it can model the mathematical representations of the systems using algebraic and state equations. 
+
+The skeleton of the proposed work is shown in Figure \ref{fig:proposed_solution}.
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=0.8\textwidth]{content/images/proposed_solution.png}}
+\caption{An overview of the proposed solution}
+\label{fig:proposed_solution}
+\end{figure}
+
+\subsection{Basics of Petri Net}
+There are different kinds of Petri Nets depending upon the amount of information that the nets can carry. One such example of low level Petri Net is the Place/Transition Nets (PT- Nets) which is used in this thesis. 
+
+A Petri Net is an example of directed, bipartite and weighted graph in between two nodes called places and transitions. Arcs run between places and transitions and each place can hold specific items called tokens.
+
+An example Petri Net is shown in Figure 5 and the various elements are elaborated below.
+
+\textbf{\textit{Places}} are the passive component of the net, and they represent the buffer, communication medium or in general a geographical location. The current state of the system is determined by the number of tokens present in a place and this state is represented by the term Marking in Petri Nets.
+
+\textbf{\textit{Transitions}} are the active components of the net, which represent the activities that change the state of the system. Transitions are fired only when certain preconditions are met and these conditions are represented in the net by means of tokens.
+
+\textbf{\textit{Tokens}} are present inside the places and each token represents a condition to be fulfilled or a synchronization condition. In general, tokens represent a physical or information object.
+
+\textbf{\textit{Arcs}} run only between places and transitions or vice versa. In the first case, these are called input arcs whereas in the second case these are called output arcs. Each arc is also associated with a specific weight that determines the number of tokens required for firing the particular transition.
+
+
+\section{Thesis Management}
+A project plan was created in order to guarantee an organized approach to this thesis work. Various milestones were created to monitor the progress of the project with time.
+\subsection{Project Plan}
+A Waterfall model with overlapping phases was created for project planning. The Gantt chart in Figure \ref{fig:gc} shows the various phases and the time duration planned for each phase. 
+The significant phases are enlisted below.
+\begin{enumerate}
+\item Literature Survey
+\item Design and Development
+\item Testing and further development
+\item Documentation
+\end{enumerate}
+From the Gantt chart it can be seen some phases are overlapped. For example, the overall design of the approach and tool selection for implementation can be made immediately once a feasible approach has been identified in the literature survey. The identification of a suitable system and the enumeration of requirements for basic functionalities of the proposed tool can be done in parallel to the above mentioned phase.
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1.05\textwidth]{content/images/figure_2_ganntchart}}
+\caption{Gannt Chart for the thesis work}
+\label{fig:gc}
+\end{figure}
+\subsection{Literature Survey}
+This thesis mainly revolves around the work done by Edgar et. al., 2015 \cite{sarmiento2015mapping}, Wang et. al., 2015 \cite{wang2015automatic} and Toa Yue et. al., 2015 \cite{yue2015rtcm}. The literature survey started with the books from the Library of University Stuttgart and moved towards online resources like the IEEE Xplore catalogue, the ACM digital library, the E-Books from various publishers like Springer, the search engines from Internet such as Google \footnote{https://www.google.de} and specific search engines for scientific journals like Google Scholar \footnote{https://scholar.google.de}. Apart from the scientific journals and publications, numerous other resources had been used from internet regarding availability of different tools, their user manuals and their documentation.
+\subsection{Thesis Structure}
+The thesis has been organized as the following chapters.
+\paragraph{Chapter 1} This chapter gives a short introduction to the thesis work, the motivation behind the thesis and a rough idea on the proposed solution.
+\paragraph{Chapter 2}
