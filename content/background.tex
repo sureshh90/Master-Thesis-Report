@@ -43,18 +43,18 @@ The term \gls{mdd} or \gls{mdsd} describes the family of engineering approaches 
 
 
 \section{Unified Modeling Language} \label{secuml}
-\gls{uml} is a standard from \gls{omg} and is a de-facto industry standard for modeling business applications using \gls{mdsd} \cite{cerny2015separation}. \gls{uml} models help to understand the requirements of the system graphically. They also provide aides to design the system, its components and to model the relationship existing between them right from early stages of software development. \gls{uml} also helps the developers and end users to maintain consistency in their interpretation of the design specification. \gls{uml}’s rapid gain in popularity in object oriented software development has attracted a great deal of research on \gls{uml} in software testing. [cite papers]
+\gls{uml} is a standard from \gls{omg} and is a de-facto industry standard for modeling business applications using \gls{mdsd} \cite{cerny2015separation}. \gls{uml} models help to understand the requirements of the system graphically. They also provide aides to design the system, its components and to model the relationship existing between them right from early stages of software development. \gls{uml} also helps the developers and end users to maintain consistency in their interpretation of the design specification. \gls{uml}’s rapid gain in popularity in object oriented software development has attracted a great deal of research on \gls{uml} in software testing. (\cite{nebut2003requirements},\cite{badri2003use},\cite{nebut2003requirements})
 
 \gls{uml} can be classified broadly into two categories namely structural and behavioral models. The structural diagrams represent the static structure of the system and the relationship between them. The different structural diagrams represent different abstraction and implementation levels. On the other hand, behavioral diagrams represent the dynamic behavior of the objects in the system i.e. the changes that happens in the system over time. Some of the important \gls{uml} diagrams which are used in upcoming sections are elaborated below.
 
 Class Diagram is one example of structural diagrams that acts as a blueprint of the system or subsystem under development. It is extensively used to model the objects that make up the system, the relationship between them, their description and the functions they provide. Class Diagrams usage is across different levels in the development cycle. In analysis stage, it is used to understand the requirements of the problem domain whereas in implementation stage, it can be used to create actual software classes. An example of Class Diagram is shown in Figure \ref{fig:umldiagrams_subfigA}.
 
-Activity Diagram is one example of behavioral diagrams which illustrates the sequence of actions in a process. Activity Diagrams usage across different levels in the development cycle are illustrated below. In requirements stage, it can be used to model the flow of events that the use cases describe and in design and implementation stage, it can be used to define the behavior of operations. An example of Activity Diagram is shown in Figure \ref{fig:umldiagrams_subfigB}..
+Activity Diagram is one example of behavioral diagrams which illustrates the sequence of actions in a process. Activity Diagrams usage across different levels in the development cycle are illustrated below. In requirements stage, it can be used to model the flow of events that the use cases describe and in design and implementation stage, it can be used to define the behavior of operations. An example of Activity Diagram is shown in Figure \ref{fig:umldiagrams_subfigB}.
 
 \begin{figure}[htb!]
   \centering
-    \subfloat[]{\includegraphics[width=0.4\textwidth]{content/images/Chapter2/ClassDiagram.png} \label{fig:umldiagrams_subfigA}}
-   \subfloat[]{\includegraphics[width=0.4\textwidth]{content/images/Chapter2/ActivityDiagram.png} \label{fig:umldiagrams_subfigB}}
+    \subfloat[]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/ClassDiagram.png} \label{fig:umldiagrams_subfigA}}
+   \subfloat[]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/ActivityDiagram.png} \label{fig:umldiagrams_subfigB}}
 	\caption{An example of a) UML Class Diagram for personal details b) UML Activity Diagram for user authentication.}
 \label{fig:umldiagrams}
 \end{figure}
@@ -71,7 +71,7 @@ A Petri Net is an example of directed, bipartite and weighted graph in between t
 
 \begin{figure}[htb!]
 \centering
-\fbox{\includegraphics[width=0.6\textwidth]{content/images/Chapter2/Petrinetwithlabels.png}}
+\fbox{\includegraphics[width=0.5\textwidth]{content/images/Chapter2/Petrinetwithlabels.png}}
 \caption{An example of a Petri Net}
 \label{fig:petrinet_example}
 \end{figure}
@@ -91,15 +91,13 @@ The terms defined in the above section can be formally defined as the following.
 One of the main features of Petri Net is the ability to perform analysis on model properties i.e. it can detect defects related to structural and dynamic properties \cite{murata1989petri}. A simple transversal of the flow relation between places and transitions can detect the structural properties whereas initial markings and final markings after transitions can detect the dynamic properties. As defined in \cite{reisig2012petri}, the defects due to dynamic properties of boundedness, liveliness, deadlock free and reachability can be detected using methods like simulation, reachability/coverability or invariant analysis.
 
  The transition behavior in a Petri Net is shown in Figure \ref{fig:petridiagrams}. Figure \ref{fig:petridiagrams} (a \& b) show Petri Nets with markings M0 and M1 respectively.  P0 and P1 are the places and T0 is the transition. The places contain tokens and arcs with arc weight of two and one respectively. This marking, which is the required precondition, enables the firing of the transition T0 and subsequently results in the marking as shown in Figure  \ref{fig:petrinet_subfigB}.  The final marking consists of place P2 with three tokens since the arc from T0 to P2 is of weight 3. 
- 
+
 \begin{figure}[htb!]
   \centering
-    \fbox{\includegraphics[width=0.3\textwidth]{content/images/Chapter2/Petrineta.png} \label{fig:petrinet_subfigA}}
-   \fbox{\includegraphics[width=0.3\textwidth]{content/images/Chapter2/Petrinetb.png} \label{fig:petrinet_subfigB}}
-	\caption{An example of a Petri Net a) before transition b) after transition.}
+    \subfloat[before transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter2/Petrineta.png} \label{fig:petrinet_subfigA}}
+   \subfloat[after transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter2/Petrinetb.png} \label{fig:petrinet_subfigB}}
+	\caption{Concept of transition in a Petri Net.}
 \label{fig:petridiagrams}
 \end{figure}
-
-
 
 
