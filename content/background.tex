@@ -87,6 +87,34 @@ A Petri Net is an example of directed, bipartite and weighted graph in between t
 \subsection{Formal Definition and Basic Terminology}
 The terms defined in the above section can be formally defined as the following. The definitions are an excerpt from Calisaya et. al., 2015 \cite{calisaya2016analysis}.
 
+\begin{definition}
+\label{def:def1}
+A \textbf{place-transition Petri Net} \cite{reisig2012petri}  is a five-tuple PN = (P, T, F, W, M$_{0}$) where P = $ \lbrace $p$_{1}$, p$_{2}$, ..., p$_{n} \rbrace $ is a finite set of places, T = $ \lbrace $t$_{1}$, t$_{2}$,..., t$_{n} \rbrace $ is a set of transitions, F   (P $\times$ T) $ \cup $ (T $\times$ P) is a set of arcs, W : F $ \subseteq $ $ \rightarrow$ $ \lbrace $1, 2,...$ \rbrace $ is a weight function, M$_{0}$ : P  $ \rightarrow\lbrace $0, 1, 2, ...$ \rbrace $ is the initial marking and P $ \cap $ T = $\emptyset $ and P $ \cup $ T 
+$ \neq $ $ \emptyset $.
+\end{definition}
+
+\begin{definition}
+\label{def:def2}
+For a PN = (P, T, F, W, M$_{0}$), a \textbf{marking} is a function M: P $  \rightarrow$ $ \lbrace $0, 1, 2,...$ \rbrace $, where M (p) is the number of tokens in p. M$_{0}$ represents the initial marking of PN.
+\end{definition}
+
+
+\begin{definition}
+\label{def:def3}
+A \textbf{transition} t is enabled for firing at a marking M if M (p) $ \geq $ W (p, t) for any p $ \in $ p$ _{in} $ where p$ _{in} $ is the set of input places of t. On firing t, M is changed to M' such that $ \forall $p $ \in $ P: M' (p) = M (p) - W (p,t) + W (t,p). 
+\end{definition}
+
+\begin{definition}
+\label{def:def4}
+For a PN, a sequence of transitions $ \sigma $ = $ \langle $t$_{1}$, t$_{2}$, ..., t$_{n} \rangle $ is called a \textbf{firing sequence} if and only if M$_{0}$[t$_{1} \rangle $, [t$_{2} \rangle $,..., [t$_{n} \rangle $M$_{n}$. In notation, M$_{0}$ [PN, $ \sigma \rangle $M$_{n}$ or M$_{0}$ [$ \sigma \rangle $M$_{n}$.
+\end{definition}
+
+\begin{definition}
+\label{def:def5}
+For a PN = (P, T, F, W, M$_{0}$), a marking M is said to be \textbf{reachable} if and only if there exists a firing sequence $ \sigma $ such that M$_{0}$ [$ \sigma \rangle $M.
+\end{definition}
+
+
 \subsection{Analysis of Petri Nets}
 One of the main features of Petri Net is the ability to perform analysis on model properties i.e. it can detect defects related to structural and dynamic properties \cite{murata1989petri}. A simple transversal of the flow relation between places and transitions can detect the structural properties whereas initial markings and final markings after transitions can detect the dynamic properties. As defined in \cite{reisig2012petri}, the defects due to dynamic properties of boundedness, liveliness, deadlock free and reachability can be detected using methods like simulation, reachability/coverability or invariant analysis.
 
