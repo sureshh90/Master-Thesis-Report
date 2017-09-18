@@ -1,65 +1,151 @@
 % !TeX spellcheck = de_DE
 \chapter{Design and Implementation of the Tool} \label{implementation} 
-This chapter gives a detailed explanation of the proposed approach and the various steps involved in it. It elaborates on the theoretical design behind the conversion of agile requirements described in natural language into formal models and the subsequent test case generation methodologies.
+This chapter speaks in detail about the \gls{tsgt}. It elaborates on the design and implementation details of the tool. The entire implementation is explained with the help of a runninng example.
  
-The first section of this chapter gives an overview of the proposed solution and the different steps involved in it. The following sections elaborate the steps defined in the overview and the justification on which the theoretical ideas are chosen.
+The chapter can be broadly classified into two sections. The first section speaks about the various objectives that the system has to fulfill, following that the constraints regarding the design are discussed and finally the tool design. The second section explains the various implementation details and intermediate artifacts.
 
-
-\section{Overview of the solution}
-The proposed solution of test script generation from requirements can be broadly classified into four important steps.
+\section{Design of the Tool}
+The following sections elaborate on the different aspects of the tool design and the different considerations made for it.
+\subsection{Design Goals}
+The high level objective of the tool is to automate the test script generation process using any formal method. While analyzing the requirements of the tool in detail, following salient objectives of the tool are identified.
 \begin{enumerate}
-\item Requirements in a Restricted Natural Language.
-\item Generation of Petri-Nets from Use Case Specifications.
-\item Generation of Reachability/Coverability Graph.
-\item Generation of Test Specifications and Test Scripts.
-\end{enumerate}
-Figure 1 shows the skeleton of the proposed work. The detailed explanation for these steps can be found in the following sections. 
-
-
-\subsection{Requirements in a Restricted Natural Language}
-The main objective of this approach is to generate test cases directly from requirements specified in natural language. In the industry, one of the important documents used to communicate requirements between the different stakeholders is \glspl{ucs}. In order to reduce the incompleteness and imprecision in \glspl{ucs}, a template with restriction rules are usually used, thereby making it a semi-formal representation. 
-
-\subsubsection{RUCM – A Restricted Natural Language}
-\gls{rucm} \cite{yue2013facilitating} is one such use case format that provides restriction rules and specific keywords, hence confining the use of natural language for \glspl{ucs}. It also corresponds to a specific metamodel called UCMeta, which facilitates automatic analysis of use cases. The selection of a restricted \gls{nl} template depends upon factors like simplicity, expressive power, better understandability and quality of models derived from it. Experiment results \cite{yue2013facilitating} shows that the template is beneficial and is applicable in various scenarios with the above mentioned characteristics.
-
-\subsubsection{Restriction Rules and Keywords}
-\gls{rucm} has also defined a list of standard keywords. A short overview of the rules is given below. For example, a conditional logic sentence is defined by the keyword IF-THEN-ELSEIF-ELSE-ENDIF, a concurrency statement by keyword MEANWHILE, condition checking sentences by keyword VALIDATES THAT and iteration sentences by DO-UNTIL. RESUME STEP keyword is used when the alternative flow should return back to its reference flow. Similarly ABORT keyword is used to describe an exit action due to some exceptions.  The complete set of keywords can be found in the template reference given in \cite{yue2013facilitating}. In addition to the keywords, \gls{rucm} also specifies restriction rules that are detailed in \cite{yue2013facilitating}. A table describing the basic elements of a \gls{rucm} template is given in Table 1.
-
-\gls{rucm} was basically created for analysis of use cases and not for test case generation. Hence few additional restrictions were added to \gls{rucm} by the authors of \cite{wang2015umtg}. In order to establish composite conditions with multiple specific alternative flows, the authors decided that the specific alternative flow should also begin with the keyword IF....THEN.  Further additions to the restriction rules can be found in \cite{wang2015umtg}. This work has also made some assumptions and changes to the \gls{rucm} template which will be detailed in Chapter 5.
- 
-\subsubsection{Comparison with a related RNL}
-Another widely used Restricted Natural Language Specification is the Scenario Specifications. It also uses restricted vocabulary and introduces restriction rules similar to \gls{rucm}. According to the author in \cite{calisaya2016analysis}, a scenario is a collection of partially ordered event occurrences, each guarded by a set of conditions (pre or post) or restricted by constraints. Further details on the scenario specifications can be found in the literature (\cite{do2000scenario}, \cite{calisaya2016analysis}).
-
-An initial comparison between the two templates revealed the following conclusions. Scenario Specification is deprived of certain properties like the metamodel defined is not exhaustive and hence it cannot be used for complete test case generation. \gls{rucm} is more suited for safety critical embedded software and an industrial case study with this template yielded good results \cite{wang2015umtg}. Test data generation is easier with the help of \gls{rucm} since natural language processing can be introduced early in the process because of the detailed metamodel. 
-
-Scenario Specification, on the other hand, has been used to specify requirements in natural language and subsequently to automate the check of correctness, consistency, completeness and unambiguity properties of the requirements in \cite{calisaya2016analysis}. The work in the mentioned literature also makes use of Petri Nets as a formal model for the analysis. This work uses \gls{rucm} as a template for \gls{rnl} requirement specifications and the work using Scenario Specifications as a foundation for transformation to formal models. 
-
-
-\subsection{Generation of Petri Nets from Use Case Specifications}
-One of the main objectives of this work is to establish a formal model for the requirements specified in natural language. The formal model in our work is Petri Nets, to be precise Place-Transition Petri Net, which is a sub category of Petri Nets. To establish the conversion from \gls{ucs} to PN, we use the concept of Model-to-Model (M2M) transformations. For this purpose, the \glspl{ucs} are described as a metamodel and we use \gls{rucm} as a template for this. Petri Net, on the other hand, can also be described as a metamodel.
-
-The transformation method from \gls{ucs} to PN consists of three main steps.
-
-\begin{enumerate}
-\item The first step defines mapping rules that translate the \gls{rucm} elements into corresponding Petri Net elements according to transformation rules defined in Chapter 5. The expected result of this process is a Sub Petri Net which consists of at least one place, transition and arc.
-\item The second step is to compose the sub Petri Nets generated from the previous step into a whole Petri Net. This is done by the fusion of output and input dummy places between sequential sub Petri Nets or by integrating Petri Nets of other referenced \glspl{ucs}.
-\item •	The third step is to generate an integrated Petri Net from the partial Petri Nets generated for each \gls{ucs}. According to \gls{rucm} specification, each \gls{ucs} can reference another \gls{ucs} and hence the need arises to transform referenced \gls{ucs} into a Petri Net. This step integrates the partial Petri Nets into an Integrated Petri Net and hence it reflects the properties of the synthesized partial Petri Nets.
+\item The main goal of the \gls{tsgt} is to generate test scripts for system testing from requirements defined in natural language.
+\item The tool should also provide means for extension so that test script generation for component and unit level testing can be accommodated.
+\item The primary output of the tool has to be automatically generated Test Scripts that can be directly executed on a given system. The tool should also provide Test Specifications as an intermediate output.
+\item The tool should be able to provide a formal model as an intermediate output. The objective is to use the formal model for other processes in \gls{sdlc}.
+\item The intermediate output should be represented in a standard format, so that the artifact is compatible with other tools already available in research and industry.
+\item The transformation between different models should have defined rules and should be implemented using established processes. This is to ensure that the same transformation does not yield different outputs.
+\item The tool must improve the coverage of the requirements than the manual process of test case generation.
+\item The tool should be automated as much as possible to reduce the time taken for test script generation.
+\item The tool must try to reduce the number of intermediate input artifacts which should be manually created. This ensures increased automation.
 \end{enumerate}
 
-The different transformations and metamodels are detailed in Chapter 5 along with a running example. As a result of the above transformations, we obtain a Petri Net that is equivalent for the given \gls{ucs}.
 
-\subsection{Generation of Reachability/Coverability Graph}
-As mentioned in Chapter 2, one of the important properties of Petri Net for dynamic analysis is reachability. As already described, when a transition is enabled for firing, tokens are transferred between places. This causes a change in marking of the Petri Net and each marking is defined by the term \textit{state}. Thus a new state is reached from the initial state. A \textit{reachable state} is defined as a state that can be reached from the current state (marking).
+\subsection{Design Constraints}
+In this section, some of the constraints that hinder the tool implementation are discussed. This section also gives an overview of the considerations made in design to circumvent these constraints.
 
-The Figure xxx explains the above process with the help of Petri Nets. The firing sequence of transitions described in the figure is $ \lbrace $T0, T2, T1$ \rbrace $. Initial marking of the Petri Net is given by $ \lbrace $1, 0, 0, 0, 0$ \rbrace $ which corresponds to $ \lbrace $P0, P1, P2, P3, P4$ \rbrace $. After the first firing, the marking of the Petri Net changes to $ \lbrace $0, 1, 1, 0, 0$ \rbrace $. As defined, these markings are also termed as states and in our case they are termed as S0 and S1 respectively. Hence it can be seen that S1 is a reachable state from S0.
+One of the most important constraints is that the metamodel provided for \gls{rucm} is too detailed. This increases the complexity of converting it into a formal model i.e. Petri Net. Therefore, a less complex metamodel is created which addresses some of the main required features. This metamodel can be considered as a subset of the original metamodel. Some of the rules in \gls{rucm} are also replaced with new rules according to the requirements of our current implementation. A brief overview of the changes is given in the respective sections.
 
-A reachability or coverability graph is a graph that contains reachable markings or states as nodes and transitions, which cause the flow of tokens, as arcs. This graph contains all the possible reachable states from the initial state and can even have multiple paths. Reachability graph for the configuration given in Figure 1 (a) is shown in Figure 2. Here, it can be seen that for the state S1 there are two possible reachable states namely S2 and S3 and hence contains two paths. The path described in Figure 1 is $ \lbrace $S0, S1, S2, S4$ \rbrace $ whereas there is an additional path $ \lbrace $S0, S1, S3, S4$ \rbrace $ in the reachability graph.
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1.05\textwidth]{content/images/Chapter5/SystemDesign}}
+\caption{An overview of the different components in the tool}
+\label{fig:systemdesign}
+\end{figure}
+
+Next important constraint is the need for an intermediate input artifact that describes the environment for which the test script has to be generated. In industry, usually the test scripts are implemented using tools and a mapping is needed to interface our implementation with the specific tool implementation.  Hence for this purpose, an implementation similar to a Lookup table is used in our tool design.
+
+\subsection{System Design of the Tool}
+Figure \ref{fig:systemdesign} shows the high level system design of the tool. The design tries to incorporate the design goals described in previous section taking into account the different limitations. The design can be divided into three blocks based on the platform on which they are implemented. The three blocks are implemented in Eclipse Modeling Edition, PIPE2 and \gls{jdk} respectively. The input of the system is \gls{ucs} in natural language and the output is the executable test scripts. Figure \ref{fig:systemdesign} also gives the details of different sub components in each block.
+
+\section{Implementation of the Tool}
+This section describes the implementation of various blocks defined in the previous section.
+
+\subsection{Implementation in Eclipse Modeling Edition}
+\subsubsection{Metamodels Developed}
+This section explains in detail about the different metamodels that are developed for the implemention of the tool. The metamodels are developed using the Eclipse Modeling Project \cite{eclipse}.
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1\textwidth]{content/images/Chapter5/PetriNetMetaModel}}
+\caption{Petri Net Metamodel}
+\label{fig:petrimetamodel}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1\textwidth]{content/images/Chapter5/UseCaseMetaModel}}
+\caption{RUCM Metamodel}
+\label{fig:rucmmetamodel}
+\end{figure}
+
+Petri Nets in our tool is based on the metamodel shown in Figure 1. As explained earlier, it consists of Places, Transitions and Arcs. 
+
+The second metamodel developed is for the \gls{rnl} template. The \gls{rnl} used in our case is \gls{rucm} and the metamodel for its template is shown in Figure 2. Here some customization according to our design goals is made. The developed metamodel is a simplified version of the metamodel in \cite{yue2013facilitating} and models only the key features necessary for our tool. It is based more on the metamodel provided in \cite{calisaya2016analysis}. Some changes are made to the restriction rules such as the rule that mandates each alternative flow should begin with a conditional statement is added and the rule that mandates the presence of post condition in each basic flow is withdrawn. 
+
+\subsubsection{Running Example}
+The tool implementation described in the next sections is explained with the help of a running example. The system under consideration is \gls{lms} from Automotive Software. The \gls{lms} is used to enhance the safety of an automobile. The purpose of the system is to help the driver to keep the vehicle in their lane to avoid crashes. 
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \caption{Running Example}
+    \begin{adjustbox}{width=1\textwidth}
+    \begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \toprule
+    \textit{\textbf{Element}} & \multicolumn{7}{l|}{\textit{\textbf{ Description}}} \\
+    \midrule
+    \textbf{Use Case Name} & \multicolumn{7}{l|}{\textit{Disable System}} \\
+    \midrule
+    \textbf{Brief Description } & \multicolumn{7}{l|}{The LMS should be turned off at certain conditions.} \\
+    \midrule
+    \multirow{2}[4]{*}{\textbf{Precondition}} & \multicolumn{7}{l|}{1. LMS is activated} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{2. Vehicle Speed is greater than 15 kmph} \\
+    \midrule
+    \textbf{Primary Actor } & \multicolumn{7}{l|}{Driver, LMS Control Unit} \\
+    \midrule
+    \textbf{Secondary Actors} & \multicolumn{7}{l|}{LCS, LKS and LWKS Control Units} \\
+    \midrule
+    \multirow{6}[12]{*}{\textbf{Basic Flow}} & \multicolumn{7}{l|}{1. The driver deaccelerates the vehicle.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{2. The driver accelerates the vehicle.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{3. The driver drifts away from the current lane.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{4. The driver activates the LKS system.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{5. The LKS steers the vehicle.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{6. The vehicle is moving through a road under repair.} \\
+    \midrule
+    \multicolumn{1}{|l|}{\multirow{4}[8]{*}{\textbf{Specific \newline{} Alternative Flows}}} & \multicolumn{7}{l|}{1.1 IF Vehicle Speed less than 15 kmph THEN deactivate LMS system with audio alert.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{3.1 IF the departure is unintentional THEN create audio alert and deactivate LMS sytem.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{5.1 IF the driver manually takes over THEN raise an alert and deactivate LKS.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{6.1 IF the road markers are unclear THEN raise an alert and deactivate LMS} \\
+    \bottomrule
+    \bottomrule
+    \end{tabular}%
+    \end{adjustbox}
+  \label{tab:runningexample}%
+\end{table}%
 
 
-\subsection{Generation of Test Specifications and Test Scripts}
-The Reachability Graph acts as an input for the generation of Test Specifications and Scripts. A Reachability Graph is composed of tangible and vanishing states with transitions (from Petri Nets) acting as arcs. A tangible state is a final reachable state from a given initial state whereas a vanishing state is a state that is traversed before reaching a tangible state. Now each path from initial state to a tangible state forms a test scenario since each arc represents a transition from Petri Net. A test scenario is a sequence of actions performed to reach a particular state. In order to make these test scenarios into complete test specifications, we add other elements like Pre-Conditions, Post-Conditions and conditions from logical statements, etc. 
+The \gls{lms} consists of three main components namely a \gls{lcs}, a \gls{ldws} and a \gls{lks}. The \gls{ldws} alerts the driver in case of unintentional lane changes. The \gls{lcs} and \gls{lks} will work together to take control of the vehicle and keep the vehicle in driver defined center of the lane. Table 1 is an extract from the \gls{srs} document of \gls{lms} and it illustrates a specific Use Case called Disable System. The template used for specifying this Use Case is \gls{rucm} template and it is based on the metamodel described in the previous section.
 
-The test specifications consist of a set of test cases and each test case in turn is made up of a set of test steps. In practice, the test scripts are realized as a set of test steps that are implemented as packages in platform specific languages. A mapping table is created to map each of the test steps to specific packages in platform specific languages. For test data, the numerical values from test steps are extracted and used for test script generation.
+\subsubsection{Input for \gls{tsgt}}
+The next important step is to provide the input to the tool in the form of \gls{rucm} template. Once the input is entered, it should also be validated according to the template rules. For this, once the metamodels are developed, they should be exported as plug-ins and installed in the current host of Eclipse Modeling Edition.
+
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1\textwidth]{content/images/Chapter5/Requiremens_Snip}}
+\caption{Running example given as input to the tool}
+\label{fig:input}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics[width=1\textwidth]{content/images/Chapter5/FinalIntegratedPetriNet}}
+\caption{Integrated Petri Net for the running example}
+\label{fig:integratedpn}
+\end{figure}
 
 
+To give inputs to the tool, we should create an instance of the \gls{rucm} metamodel. The running example is given as input for the tool and the structure of the user input can be seen in the Figure 3.
 
+\subsubsection{Model Transformations}
+This section describes how the \gls{ucs} in \gls{rucm} metamodel is converted into an integrated Petri Net. Model transformations, which are the core of the MDSE technique, are used for this purpose.
+
+The first step of the transformation process is to transform elements from \gls{rucm} metamodel to Petri Net metamodel elements. For this purpose, the concept of \gls{m2m} transformation is used and it needs specific rules for transformation from one metamodel to another.  In our tool, these rules are implemented using QVTo \cite{eclipseqvt}. Figure 4 gives a visual overview of the different transformation rules and Appendix xxx shows the precise implementation of the rules. 
+
+Once this transformation is executed, we get a collection of Sub Petri Nets. These should be integrated again into a single Petri Net using the rules defined in section xxx. These rules are again implemented using QVTo as a \gls{m2m} transformation. Appendix xxx shows the implementation of these rules.
+
+The output of the above transformation yields an integrated Petri Net. In order to make this output compatible with other Petri Net tools, the available Petri Net is converted into a standard xml file called \gls{pnml}PNML. This transformation from Petri Net metamodel to textual representation is done using \gls{m2t} transformation implemented in Xpand language \cite{eclipsem2t}. Appendix xxx gives the details of this implementation. A graphical representation of the intermediate output for our running example in PIPE2 tool is shown in Figure 5.
+
+\subsection{Implementation in PIPE2 tool}
+This block generates the reachability graph. The integrated Petri Net in the form of the xml file is given as input to the PIPE2 tool. From this, reachablibility graph is generated using the corresponding menu in the tool. In order to use this graph in the subsequent steps, it is exported as an xml file. For this, a package is added to the existing tool and this exports the xml file with the template shown in appendix xxx. The implementation is done using \gls{jdk}.
+
+\subsection{Implementation in \gls{jdk} environment}
+This block is responsible for the generation of test specifications and test scripts. Inputs to this section are the Reachability Graph and the \gls{pnml} file. The test specification is generated by identifying the reachable paths from the Reachability Graph and then the conditions from the \gls{pnml} file are added. For identifying all reachable paths, an \textit{All Path Search} is done from initial state to tangible states using \textit{Depth First Search Algorithm}.
+
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics{content/images/Chapter5/TestScript}}
+\caption{The final output of the TSTG tool}
+\label{fig:testscript}
+\end{figure}
+
+Once a test specification is ready, each test case in the test specification is elicited out and the test steps for the test cases are generated using an implementation similar to Lookup table. This Lookup table maps each test step to a package predefined in python and finally executable test cases are generated in python. Figure x shows a generated test script for one of the test cases of our running example. The entire implementation is done in \gls{jdk} using Eclipse Java Standard Edition.
