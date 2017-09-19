@@ -1,64 +1,85 @@
 % !TeX spellcheck = de_DE
 
-\chapter{Introduction}
-The development of modern day software is becoming an increasingly complex activity which warrants extensive research in the field of Software Engineering. According to IEEE Standards, Software Engineering is described as the application of a systematic, closely controlled, proven approach to the development, operation and maintenance of software. Along these lines, several methodologies were introduced to reduce the cost and time of software development and to improve the quality of software product. Most of the current research in the field of Software Engineering focuses on some of these objectives and this thesis also tries to address one such purpose.
+\chapter{Evaluation of the Tool}\label{evaluation} 
+This chapter gives detailed information on how our tool is evaluated. Evaluation of the tool is done on the basis of parameters used by similar tools to access the quality of generated test scripts. These parameters facilitate correlating our tool with other tools.
 
-The first half of this chapter illustrates the motivation behind the thesis work, the problem statement and the proposed solution. The second half illustrates how the thesis is planned and managed along with the organization of the thesis report.
-\section{Motivation}
-The following section describes the motivation behind the thesis from different perspectives.
-\subsection{Software Testing Perspective}
-Software Testing is one of the salient steps in the software development lifecycle which ensures whether the developed product meets its purported requirements. Test cases are generally derived from functional requirements, which are usually written in common natural language and this requires a test engineer to manually elicit and develop system test case specifications and also to convert it to a test scripting language for automatic execution. Particularly in the context of safety critical systems, the traceability between system test cases and the requirements and the test coverage with respect to requirements are imperative. The efficiency of the manual process depends on the domain expertise of the test engineer and also it does not offer a systematic way to establish test coverage and traceability. Hence, it can be stated firmly that the manual process of test case creation is a time consuming, expensive and a non-systematic approach. In order to overcome these challenges, this thesis focuses on automatic generation of system test cases directly from requirements specifications written in natural language.
-\subsection{Agile Perspective}
-Agile software development processes \cite{ambler2009agile} were introduced to keep up with the fast changing marketplace along with the view to support frequent changes in requirements, stakeholder involvement and their priorities and finally quality products with shorter deadlines. Agile development processes have shown greater success rate than traditional software development processes in industry and hence had become an inevitable term in the current software industry. In order to ensure quality products within a shorter development lifecycle, development and testing are done in parallel. As requirement changes are frequent in an agile process, the need to change test cases also becomes necessary which when performed manually is time consuming and extensive. Hence an automated process of test case generation plays a huge role in agile development process.
-\subsection{Model Based Testing Perspective}
-Automatic test case generation has been the topic of study in software engineering for quite a long period. But most of the already proposed approaches need customized artifacts as input for test case generation. For example, \gls{mbt} is one approach in which models of system under test is used for test case generation.  The functional behavior of the system is modeled in any formal specification notations \cite{carvalho2013test} which are then used for the generation of test scenarios and test oracles.
+The first section of the chapter speaks on the various methods and criteria used for evaluation. The second section of this chapter discusses the different results obtained from the evaluation and also compares our tool with similar tools available in the research domain.
+\section{Preliminary Preparation for Evaluation}
+This section gives an idea of the system to be used for evaluation, the different criteria and the procedure used for evaluation.
+\subsection{System for Evaluation}
+For evaluation of \gls{tsgt} tool, we use a system called \gls{lms}. The \gls{lms} is safety critical automotive software used in most of the present-day automobiles. The \glspl{srs} for \gls{lms} provided in \cite{blazysoftware} serves a foundation for our evaluation. This document provides an overview of the entire system and the various requirements needed for system development.  It also provides detailed requirements for specific functionalities and in addition includes models describing the functionality and interactions of the system. The requirements are organized in the form of use cases and there are totally 13 use cases which act as inputs for our tool.
+\subsection{Evaluation Criteria}
+The evaluation of the tool is based on two main criteria.
+\begin{enumerate}
+\item The time taken for the generation of test scripts.
+\item The coverage of requirements by the generated test cases.
+\end{enumerate}
+\subsubsection{\textbf{Time Criteria}}
 
-The most common artifact used in such cases is the \gls{uml} model that captures the behavioral or functional aspect of the system. Many approaches need the requirement specifications to be modeled as \gls{uml} behavioral models like state charts \cite{ryser1999scenario}, activity diagrams \cite{linzhang2004generating} and sequence diagrams \cite{nebut2006automatic}.  But these approaches when applied in complex industrial projects require the presence of precise behavioral models representing the system. This again is complex and time consuming process which defeats our core purpose. \gls{mbt} also becomes absurd when an industry never uses formal models in its software development life cycle.  Hence the best approach would be to generate test cases directly from requirement specifications without the need for manual creation of any input artifacts.
-\section{Problem Statement}
-Software testing is a challenging, time consuming and expensive process in \gls{sdlc}. The process of software testing includes creation of test cases, test execution and test evaluation. In the mentioned processes, test execution and evaluation is relatively easy and simple whereas creation of test cases utilizes nearly 40 – 70 \% of the total effort spent on testing \cite{kulkarni2014generating}. This is because, while test execution and evaluation can be easily automated, eliciting test cases from requirements specification and deciding whether the test cases are sufficient to verify the entire system are done manually by testing experts. Such a process of manual elicitation of test cases has the following drawbacks.
-\begin{enumerate}
-\item The efficiency of the process is hugely dependent on the experience of the testing experts and his knowledge on the particular domain.
-\item The process of deriving test cases is not systematic and it solely depends on the experience of the expert.
-\item The traceability between requirements and test cases are not systematically established which are necessary for establishing a standard process.
-\item There is no standardized process to establish the test coverage and this also leads to the increase in the number of redundant test cases.
-\item The requirements written in \gls{nl} are often ambiguous and are interpreted differently by different domain experts. The same holds true for test cases written in \gls{nl} and its interpretation by tester.
-\item Finally, the process is manual, error-prone and time consuming.
-\end{enumerate}
-In order to overcome these drawbacks of the current practices, this thesis focuses on providing an ideal situation where textual, easy to read and traceable test cases are automatically generated from requirements defined in \gls{nl}. This process should also provide systematic approach for test case generation, ensure necessary test coverage, and provide means to automatically convert these textual test cases into executable test cases along with test input data and thereby improving the quality of the product. In short the thesis tries to address the following questions.
-\begin{enumerate}
-\item Can we create a tool that can automatically generate test cases from requirements defined in natural language without any intermediate input from domain expert?
-\item Can the tool be used to create some intermediate output that can be used in other software engineering process?
-\item Can the tool automatically create executable test cases with minimal input from domain experts?
-\end{enumerate}
-\section{Proposed Solution}
-The proposed solution is to create a tool that takes the requirements specification written in natural language as an input and convert it into any intermediate formal notation such as Petri Net. The requirements are usually written as \gls{rucs} which are \glspl{ucs} with a defined template and a set of restriction rules. The usage of such rules is to reduce the imprecision and incompleteness in \gls{ucs}. The intermediate \gls{pnm} can be analyzed using any search algorithms for test scenario generation. The test case scenarios are then converted into executable test cases along with test input. The conversion into formal models such as \gls{pnm} has other advantages as they can also be used for other purposes such as checking the completeness, consistency, correctness and unambiguity of the given requirement descriptions \cite{sarmiento2015analysis}. The skeleton of the proposed work is shown in Figure \ref{fig:proposed_solution}.
-\begin{figure}[htb!]
-\centering
-\fbox{\includegraphics[width=0.9\textwidth]{content/images/Chapter1/proposed_solution.png}}
-\caption{An overview of the proposed solution}
-\label{fig:proposed_solution}
-\end{figure}
-\section{Thesis Management}
-A project plan was created in order to guarantee an organized approach to this thesis work. Various milestones were created to monitor the progress of the project with time.
-\subsection{Project Plan}
-A Waterfall model with overlapping phases was created for project planning. The Gantt chart in Figure \ref{fig:gc} shows the various phases and the time duration planned for each phase. 
-The significant phases are enlisted below.
-\begin{enumerate}
-\item Literature Survey
-\item Design and Development
-\item Testing and further development
-\item Documentation
-\end{enumerate}
-From the Gantt chart it can be seen some phases are overlapped. For example, the overall design of the approach and tool selection for implementation can be made immediately once a feasible approach has been identified in the literature survey. The identification of a suitable system and the enumeration of requirements for basic functionalities of the proposed tool can be done in parallel to the above mentioned phase.
-\begin{figure}[htb!]
-\centering
-\fbox{\includegraphics[width=1.05\textwidth]{content/images/Chapter1/figure_2_ganntchart}}
-\caption{Gannt Chart for the thesis work}
-\label{fig:gc}
-\end{figure}
-\subsection{Literature Survey}
-This thesis mainly revolves around the work done by Edgar et. al., 2015 \cite{sarmiento2015mapping}, Wang et. al., 2015 \cite{wang2015automatic} and Toa Yue et. al., 2015 \cite{yue2015rtcm}. The literature survey started with the books from the Library of University Stuttgart and moved towards online resources like the IEEE Xplore catalogue, the ACM digital library, the E-Books from various publishers like Springer, the search engines from Internet such as Google\footnote{https://www.google.de} and specific search engines for scientific journals like Google Scholar\footnote{https://scholar.google.de}. Apart from the scientific journals and publications, numerous other resources had been used from internet regarding availability of different tools, their user manuals and their documentation.
-\subsection{Thesis Structure}
-The thesis has been organized as the following chapters.
-\paragraph{Chapter 1} This chapter gives a short introduction to the thesis work, the motivation behind the thesis and a rough idea on the proposed solution.
-\paragraph{Chapter 2}
+\begin{definition}
+\label{def:def5}
+
+The effort required to generate a test case is defined as the average time taken to generate the test cases \cite{elghondakly2015waterfall}.
+
+Effort$_{TC}$   = $\displaystyle\frac{\mbox{Time taken to generate the test cases}}{\mbox{Total number of generated test cases}}$
+
+In case of the automated process, the time taken to generate the test cases is inclusive of the time that is required to specify the requirements in \gls{rnl}, whereas in case of the manual process, it is inclusive of the time taken to convert the test cases into executable test scripts.
+\end{definition}
+
+\begin{definition}
+\label{def:def6}
+
+Test Case Productivity is defined as the ratio of the number of test steps generated to the time taken (in minutes) to generate these test steps \cite{gulechha2009software}.
+
+Test Case Productivity (TCP)   = $\displaystyle\frac{\mbox{Number of test steps generated}}{\mbox{Total Time taken to generate the test steps}}$
+\end{definition}
+
+\subsubsection{\textbf{Coverage Criteria}}
+The following criterion is necessary to analyze the quality of the test case generation process. This criterion also evaluates our methodology for Petri Net derivation since the test case generation depends upon the derived Petri Net.
+
+\begin{definition}
+\label{def:def7}
+
+The generated test cases must ensure that all the requirements in \gls{srs} are covered at least once. This is also requirement of ISO-26262 \cite{iso201126262}, a standard for functional safety of automobiles.
+
+Requirement Coverage = $\displaystyle\frac{\mbox{Number of requirements covered}}{\mbox{Number of requirements present in the \gls{srs}}}$  $\times 100$
+\end{definition}
+
+\begin{definition}
+\label{def:def8}
+
+The generated test cases must ensure that all possible paths from the initial place to the final place in a Petri Net are covered at least once.
+
+Path Coverage = $\displaystyle\frac{\mbox{Number of paths covered}}{\mbox{Number of paths present}}$  $\times 100$
+\end{definition}
+
+\subsection{Evaluation Procedure}
+The sequence of steps followed for evaluation of the tool is shown graphically in Figure 1. The evaluation is done by comparing the manual and automatic generation of test scripts. The \gls{srs} document provided in \cite{blazysoftware} acts as input for the domain expert. In case of manual means, the domain expert analysis the \gls{srs} document and creates the test specification. Once it is done, the tester creates the test scripts corresponding to the test specification. In case of automatic means, the domain expert writes the requirements in \gls{rnl} and provides it as an input to the \gls{tsgt} tool which directly generates the test scripts.
+\section{Evaluation Results and Discussion}
+This section lists out the results obtained from the evaluation process and further discusses the various inferences from the results.
+\subsection{Analysis of Quantitative Data}
+\subsubsection{Based on Time Criteria}
+The results of the tool evaluation are first discussed with respect to time criteria discussed in Section xxxx. Table 1 and 2 describe the different parameters for manual and tool generated test scripts respectively. The tables provide data of five different use cases from our evaluation system and also the average of different parameters.
+
+According to definition xxxx, Effort per test case is indicative of the average time required to generate each test case. The tables show that the effort required for each test case in manual method is 10.6 minutes per test case on an average whereas in automatic generation it is 1.6 minutes per test case. This denotes an 85\% improvement over the manual method.
+
+According to definition xxxx, \gls{tcp} shows the number of test steps that can be generated in one minute. From the tables, it can be seen that our tool generated 3.3 more test steps in a minute because \gls{tcp} stands at 0.6 and 3.9 for manual and automatic methods respectively. Figure 2 shows a chart that contains the details of all the individual use cases.
+From the tables it can be inferred that the total time taken for generating the test scripts manually takes 54 minutes on an average whereas the total time taken for automatic test script generation is only 13 minutes. This implies that there is a 76\% reduction in time when the tool is used for test script generation.
+
+\subsubsection{Based on Coverage Criteria}
+
+This segment deals with the results of the tool evaluation based on coverage criteria discussed in Section xxxx. Table 3 describes the different parameters for manual and tool generated test scripts respectively.
+
+From the table, it can be inferred that the number of test cases generated by manual method is always less than the automatic method. The coverage percentage in case of manual method is solely dependent on the individual extracting the test cases. Hence we see difference in coverage percentage in manual method and it is arbitrary. But in the automatic method, requirement and path coverage are always 100\%. This is due to the formal method of test case generation and this also ensures that each requirement and path is covered with the generated test cases. 
+
+\subsection{Based on Coverage Criteria}
+This section compares our tool i.e. \gls{tsgt} with other closely related test script generation tools available in the research field. Figure 3 shows a graphical representation of the comparison between different approaches based on the effort per test case criterion. The data for manual and \gls{tsgt} approach are taken out from our evaluation. \cite{yue2015rtcm}provides the data for \gls{rtcm} and \gls{umtg} approach.
+
+The pros and cons of the different approaches are discussed below. \gls{umtg} provides an exhaustive test data for test script generation but it requires domain models for test data generation. The need for domain model generation along with test data generation using \gls{ocl} increases the effort required for test case generation. \gls{rtcm} provides the best solution but it requires manual intervention to improve some of the intermediate artifacts which might increase the effort in some cases. 
+
+The total time taken for test case generation in our tool is inclusive of the time taken to specify the \glspl{ucs} in \gls{rucm} template and to present them as input to our tool. This solely depends upon the expertise of the user in \gls{rucm} template and also the experience in our tool. The time taken for test script generation after the input section is negligible. Figure 4 shows how the total time taken for test script generation from each use case is split between different blocks in our tool. From the chart, it is obvious that the \gls{ucs} to \gls{rucm} template utilizes most of the time taken.
+
+The advantage with our tool is that the time taken to specify complex \glspl{ucs} does not add much to the total time taken, but produces more number of test cases. This scenario can be explained with the help of a graph as shown in Figure 5. By comparing Use Case 3 and Use Case 5, there is not much difference in the time required to specify the \glspl{ucs} but there is a drastic increase in the number of test cases that are generated thereby reducing the effort required to generate them. In the manual method, it can also be seen that more complex the use cases become, lesser the number of test cases identified. The average effort required to generate a test case will improve drastically when more number of complex use cases are evaluated.
+
+\subsection{Summary}
+This section summarizes the trends observed in the evaluation results and our tool characteristics. Evaluation criteria considering time and coverability have been compared between \gls{tsgt} and manual methods. The evaluation shows that \gls{tsgt} requires 85\% less effort than the manual method and it also provides 100\% coverability. Our tool has also been compared with other similar approaches in the research field and has been found to be good. Also, the limitations of our tool in reducing the effort required for each test case has been discussed and ways to improve them are suggested. From all the above discussions, it can be concluded that that automatic test case generation using \gls{tsgt} is definitely better than manual test case generation and other existing approaches. 

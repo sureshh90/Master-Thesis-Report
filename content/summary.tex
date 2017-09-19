@@ -1,0 +1,47 @@
+% !TeX spellcheck = de_DE
+
+\chapter{Conclusion and Outlook}\label{conclusion} 
+This chapter provides a short summary of the thesis work and concludes the thesis work. This chapter also provides a short note on the limitations of the proposed work and the possibilities of future research. The final section concludes the chapter by enumerating the contributions of this thesis-work to the research in the field of software engineering.
+
+\section{Summary of the Thesis}
+The modern day software demands a software development process that produces high quality software with reduced cost and time.  Agile methodology, which was developed with these objectives, has frequent change in requirements as one of its main feature. Consequently, the testing process must also adapt itself to the changing requirements. A need for a formal method for test case generation is paramount because most of the testing process was dependent on the expertise of the stakeholders. The above statements provide the basic motivation for the thesis.
+
+The thesis provides an approach in which the test scripts can be generated directly from the requirements. In Agile, the requirements are expressed in the form of use cases written in natural language. In order to automate the test script generation, we need a model like Petri Net which has semantics that helps formal analysis. 
+
+Now the need for a formalized method to convert use cases from natural language into Petri Nets arises. For this, a RNL template called RUCM is used and it has predefined metamodels that facilitate easy conversion into Petri Net. Once the Petri Net is elicited from the requirements, it can be easily simulated to derive test cases. Finally, test scripts are created using a Lookup table that has mappings to test steps that are predefined according to the platform on which the generated test scripts should be executed.
+
+A tool called TSGT has been developed based on the above proposed approach. The tool on comparison with manual method shows 76\% reduction in the time taken for test case generation and 85\% improvement on the effort required for each test. The coverage criteria have also greatly improved than that of the manual method. On an average, the tool provides 21\% more coverage than the manual method.
+
+The proposed approach also has some limitations and hence some assumptions have to be made for developing the tool. It also provides the possibility for future work since some of its functionalities can be enhanced and extended with more work. The next two sections provide details on the limitations and outlook regarding future work respectively.
+
+ 
+\section{Limitations}
+The main assumption in this work is that the tool is used only within the scope of Agile software development process. In Agile, the larger requirements are broken down into smaller features called User Stories or Use Cases depending upon the project. These have a relatively simpler workflow when compared to other forms of requirement specifications. Currently, the tool cannot support much complex workflows such as the interaction between multiple Use Cases and concurrent running of Use Cases.
+
+The work has the following limitations that directly affect the evaluation metrics of the tool. First, the quality of the generated test cases depends solely on the quality of the UCSs, in RUCM template, entered by the user. Therefore, the user should be aware of the restriction rules and grammar of the RUCM template. This not only ensures good quality of generated test cases but also plays a major role in improving the effort taken for test case generation. 
+
+Second, the efficiency of the test script generation depends upon the accuracy of the Lookup table according to predefined test steps. Hence, Lookup table implementation has to be continuously improved for good quality test scripts. Finally, the work has been implemented with only two coverage criteria in mind. There is scope for inclusion of further criteria like branch, decision, boundary value, etc. and for this more research has to be performed on the part of test data generation.
+
+
+\section{Outlook for Future Work}
+There are several directions in which this work can be extended and improved. The next sections highlight the different enhancements that can be carried out in future on the current work.
+
+\begin{itemize}
+\item \textit{A comprehensive solution for requirements:} The work can be extended to make it applicable for requirements of different software development processes. Currently, only the Agile methodology is supported.
+\item \textit{Integration with Requirements Engineering:}  In practice, the quality of requirements is evaluated not only by analyzing them but also by creating corresponding test cases. Hence, the method can be enhanced such that it supports feedback about the quality of requirements by integrating it into existing approaches like [1] and [2] that use Petri Nets for formal analysis of requirements. 
+\item \textit{Integration with other processes in SDLC:} The work can be developed such that it can be integrated with other processes in SDLC. For example, some UML behavioral diagrams like Activity Diagrams are based on the semantics of Petri Nets. A formal approach can convert our intermediate artifacts into standard models. Similarly, some approaches like [3] and [4] use Petri Nets for automatic code generation. 
+\item \textit{A robust method for test data generation:} The test data generation technique in the current method can be extended so that it can support other coverage criteria.  Improvement in test data generation will also enhance the quality of generated test scripts.
+\item \textit{Integration of NLP tools:} The current work can be improved in areas like identifying constraints and test data, by employing NLP. The advantage of using NLP techniques is that it helps to understand the context of the test scenario. The quality of the test cases would improve if the tool could understand the meaning of the test steps.
+\item \textit{Integration with MDSE processes:} The current implementation of the tool has various formal models. Since MDSE uses models as the foundation for software development, these formal models can be integrated into the MDSE processes thereby improving the productivity.
+\end{itemize} 
+
+\section{Conclusion}
+A formal method that supports auto-generation of test scripts from requirements within an Agile SDLC has been designed and implemented in this thesis. The thesis is concluded with the contributions of the proposed approach to the existing research in the field of Agile software engineering. The contributions are
+\begin{itemize}
+\item \textit{A formal technique for test case elicitation from the requirements:} This eliminates the need for domain experts and their proficiency from test case generation process. 
+\item \textit{A formal technique to convert requirements into analyzable formal models:} This facilitates the use of the formal models for other processes in SDLC.
+\item \textit{A restricted natural language template for use case specifications:} A template has been analyzed and adapted for test case generation process in this work. 
+\item \textit{A tool for test script generation:} A tool that can reduce the effort for test script generation along with improved test coverage has been designed and realized in this thesis.
+\end{itemize}
+
+As final remarks, it can be concluded that a formal approach for test script generation from requirements in natural language is feasible and has been realized in this work. It can also be concluded that the tool built in this work is found to be more advantageous than the manual method of test script generation. In addition, the thesis also provides various prospects for integration into the mainstream processes of software development.
