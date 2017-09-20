@@ -8,7 +8,7 @@ The chapter can be broadly classified into two sections. The first section speak
 The following sections elaborate on the different aspects of the tool design and the different considerations made for it.
 \subsection{Design Goals}
 The high level objective of the tool is to automate the test script generation process using any formal method. While analyzing the requirements of the tool in detail, following salient objectives of the tool are identified.
-\begin{enumerate}
+\begin{itemize}
 \item The main goal of the \gls{tsgt} is to generate test scripts for system testing from requirements defined in natural language.
 \item The tool should also provide means for extension so that test script generation for component and unit level testing can be accommodated.
 \item The primary output of the tool has to be automatically generated Test Scripts that can be directly executed on a given system. The tool should also provide Test Specifications as an intermediate output.
@@ -18,7 +18,7 @@ The high level objective of the tool is to automate the test script generation p
 \item The tool must improve the coverage of the requirements than the manual process of test case generation.
 \item The tool should be automated as much as possible to reduce the time taken for test script generation.
 \item The tool must try to reduce the number of intermediate input artifacts which should be manually created. This ensures increased automation.
-\end{enumerate}
+\end{itemize}
 
 
 \subsection{Design Constraints}
@@ -58,9 +58,9 @@ This section explains in detail about the different metamodels that are develope
 \label{fig:rucmmetamodel}
 \end{figure}
 
-Petri Nets in our tool is based on the metamodel shown in Figure 1. As explained earlier, it consists of Places, Transitions and Arcs. 
+Petri Nets in our tool is based on the metamodel shown in Figure \ref{fig:petrimetamodel}. As explained earlier, it consists of Places, Transitions and Arcs. 
 
-The second metamodel developed is for the \gls{rnl} template. The \gls{rnl} used in our case is \gls{rucm} and the metamodel for its template is shown in Figure 2. Here some customization according to our design goals is made. The developed metamodel is a simplified version of the metamodel in \cite{yue2013facilitating} and models only the key features necessary for our tool. It is based more on the metamodel provided in \cite{calisaya2016analysis}. Some changes are made to the restriction rules such as the rule that mandates each alternative flow should begin with a conditional statement is added and the rule that mandates the presence of post condition in each basic flow is withdrawn. 
+The second metamodel developed is for the \gls{rnl} template. The \gls{rnl} used in our case is \gls{rucm} and the metamodel for its template is shown in Figure \ref{fig:rucmmetamodel}. Here some customization according to our design goals is made. The developed metamodel is a simplified version of the metamodel in \cite{yue2013facilitating} and models only the key features necessary for our tool. It is based more on the metamodel provided in \cite{calisaya2016analysis}. Some changes are made to the restriction rules such as the rule that mandates each alternative flow should begin with a conditional statement is added and the rule that mandates the presence of post condition in each basic flow is withdrawn. 
 
 \subsubsection{Running Example}
 The tool implementation described in the next sections is explained with the help of a running example. The system under consideration is \gls{lms} from Automotive Software. The \gls{lms} is used to enhance the safety of an automobile. The purpose of the system is to help the driver to keep the vehicle in their lane to avoid crashes. 
@@ -104,7 +104,7 @@ The tool implementation described in the next sections is explained with the hel
 \end{table}%
 
 
-The \gls{lms} consists of three main components namely a \gls{lcs}, a \gls{ldws} and a \gls{lks}. The \gls{ldws} alerts the driver in case of unintentional lane changes. The \gls{lcs} and \gls{lks} will work together to take control of the vehicle and keep the vehicle in driver defined center of the lane. Table 1 is an extract from the \gls{srs} document of \gls{lms} and it illustrates a specific Use Case called Disable System. The template used for specifying this Use Case is \gls{rucm} template and it is based on the metamodel described in the previous section.
+The \gls{lms} consists of three main components namely a \gls{lcs}, a \gls{ldws} and a \gls{lks}. The \gls{ldws} alerts the driver in case of unintentional lane changes. The \gls{lcs} and \gls{lks} will work together to take control of the vehicle and keep the vehicle in driver defined center of the lane. Table \ref{tab:runningexample} is an extract from the \gls{srs} document of \gls{lms} and it illustrates a specific Use Case called Disable System. The template used for specifying this Use Case is \gls{rucm} template and it is based on the metamodel described in the previous section.
 
 \subsubsection{Input for \gls{tsgt}}
 The next important step is to provide the input to the tool in the form of \gls{rucm} template. Once the input is entered, it should also be validated according to the template rules. For this, once the metamodels are developed, they should be exported as plug-ins and installed in the current host of Eclipse Modeling Edition.
@@ -124,16 +124,16 @@ The next important step is to provide the input to the tool in the form of \gls{
 \end{figure}
 
 
-To give inputs to the tool, we should create an instance of the \gls{rucm} metamodel. The running example is given as input for the tool and the structure of the user input can be seen in the Figure 3.
+To give inputs to the tool, we should create an instance of the \gls{rucm} metamodel. The running example is given as input for the tool and the structure of the user input can be seen in the Figure \ref{fig:input}.
 
 \subsubsection{Model Transformations}
 This section describes how the \gls{ucs} in \gls{rucm} metamodel is converted into an integrated Petri Net. Model transformations, which are the core of the MDSE technique, are used for this purpose.
 
 The first step of the transformation process is to transform elements from \gls{rucm} metamodel to Petri Net metamodel elements. For this purpose, the concept of \gls{m2m} transformation is used and it needs specific rules for transformation from one metamodel to another.  In our tool, these rules are implemented using QVTo \cite{eclipseqvt}. Figure 4 gives a visual overview of the different transformation rules and Appendix xxx shows the precise implementation of the rules. 
 
-Once this transformation is executed, we get a collection of Sub Petri Nets. These should be integrated again into a single Petri Net using the rules defined in section xxx. These rules are again implemented using QVTo as a \gls{m2m} transformation. Appendix xxx shows the implementation of these rules.
+Once this transformation is executed, we get a collection of Sub Petri Nets. These should be integrated again into a single Petri Net using the rules defined in Section \ref{integratedpngen}. These rules are again implemented using QVTo as a \gls{m2m} transformation. Appendix xxx shows the implementation of these rules.
 
-The output of the above transformation yields an integrated Petri Net. In order to make this output compatible with other Petri Net tools, the available Petri Net is converted into a standard xml file called \gls{pnml}PNML. This transformation from Petri Net metamodel to textual representation is done using \gls{m2t} transformation implemented in Xpand language \cite{eclipsem2t}. Appendix xxx gives the details of this implementation. A graphical representation of the intermediate output for our running example in PIPE2 tool is shown in Figure 5.
+The output of the above transformation yields an integrated Petri Net. In order to make this output compatible with other Petri Net tools, the available Petri Net is converted into a standard xml file called \gls{pnml}PNML. This transformation from Petri Net metamodel to textual representation is done using \gls{m2t} transformation implemented in Xpand language \cite{eclipsem2t}. Appendix xxx gives the details of this implementation. A graphical representation of the intermediate output for our running example in PIPE2 tool is shown in Figure \ref{fig:integratedpn}.
 
 \subsection{Implementation in PIPE2 tool}
 This block generates the reachability graph. The integrated Petri Net in the form of the xml file is given as input to the PIPE2 tool. From this, reachablibility graph is generated using the corresponding menu in the tool. In order to use this graph in the subsequent steps, it is exported as an xml file. For this, a package is added to the existing tool and this exports the xml file with the template shown in appendix xxx. The implementation is done using \gls{jdk}.
@@ -148,4 +148,4 @@ This block is responsible for the generation of test specifications and test scr
 \label{fig:testscript}
 \end{figure}
 
-Once a test specification is ready, each test case in the test specification is elicited out and the test steps for the test cases are generated using an implementation similar to Lookup table. This Lookup table maps each test step to a package predefined in python and finally executable test cases are generated in python. Figure x shows a generated test script for one of the test cases of our running example. The entire implementation is done in \gls{jdk} using Eclipse Java Standard Edition.
+Once a test specification is ready, each test case in the test specification is elicited out and the test steps for the test cases are generated using an implementation similar to Lookup table. This Lookup table maps each test step to a package predefined in python and finally executable test cases are generated in python. Figure \ref{fig:testscript} shows a generated test script for one of the test cases of our running example. The entire implementation is done in \gls{jdk} using Eclipse Java Standard Edition.
