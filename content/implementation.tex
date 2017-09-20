@@ -9,11 +9,11 @@ The following sections elaborate on the different aspects of the tool design and
 \subsection{Design Goals}
 The high level objective of the tool is to automate the test script generation process using any formal method. While analyzing the requirements of the tool in detail, following salient objectives of the tool are identified.
 \begin{itemize}
-\item The main goal of the \gls{tsgt} is to generate test scripts for system testing from requirements defined in natural language.
+\item The main goal of the \gls{tsgt} is to generate test scripts for system testing from requirements defined in the natural language.
 \item The tool should also provide means for extension so that test script generation for component and unit level testing can be accommodated.
 \item The primary output of the tool has to be automatically generated Test Scripts that can be directly executed on a given system. The tool should also provide Test Specifications as an intermediate output.
 \item The tool should be able to provide a formal model as an intermediate output. The objective is to use the formal model for other processes in \gls{sdlc}.
-\item The intermediate output should be represented in a standard format, so that the artifact is compatible with other tools already available in research and industry.
+\item The intermediate output should be represented in a standard format so that the artifact is compatible with other tools already available in research and industry.
 \item The transformation between different models should have defined rules and should be implemented using established processes. This is to ensure that the same transformation does not yield different outputs.
 \item The tool must improve the coverage of the requirements than the manual process of test case generation.
 \item The tool should be automated as much as possible to reduce the time taken for test script generation.
@@ -22,7 +22,7 @@ The high level objective of the tool is to automate the test script generation p
 
 
 \subsection{Design Constraints}
-In this section, some of the constraints that hinder the tool implementation are discussed. This section also gives an overview of the considerations made in design to circumvent these constraints.
+In this section, some of the constraints that hinder the tool implementation are discussed. This section also gives an overview of the considerations made in the design to circumvent these constraints.
 
 One of the most important constraints is that the metamodel provided for \gls{rucm} is too detailed. This increases the complexity of converting it into a formal model i.e. Petri Net. Therefore, a less complex metamodel is created which addresses some of the main required features. This metamodel can be considered as a subset of the original metamodel. Some of the rules in \gls{rucm} are also replaced with new rules according to the requirements of our current implementation. A brief overview of the changes is given in the respective sections.
 
@@ -36,14 +36,14 @@ One of the most important constraints is that the metamodel provided for \gls{ru
 Next important constraint is the need for an intermediate input artifact that describes the environment for which the test script has to be generated. In industry, usually the test scripts are implemented using tools and a mapping is needed to interface our implementation with the specific tool implementation.  Hence for this purpose, an implementation similar to a Lookup table is used in our tool design.
 
 \subsection{System Design of the Tool}
-Figure \ref{fig:systemdesign} shows the high level system design of the tool. The design tries to incorporate the design goals described in previous section taking into account the different limitations. The design can be divided into three blocks based on the platform on which they are implemented. The three blocks are implemented in Eclipse Modeling Edition, PIPE2 and \gls{jdk} respectively. The input of the system is \gls{ucs} in natural language and the output is the executable test scripts. Figure \ref{fig:systemdesign} also gives the details of different sub components in each block.
+Figure \ref{fig:systemdesign} shows the high level system design of the tool. The design tries to incorporate the design goals described in the previous section taking into account the different limitations. The design can be divided into three blocks based on the platform on which they are implemented. The three blocks are implemented in Eclipse Modeling Edition, PIPE2 and \gls{jdk} respectively. The input of the system is \gls{ucs} in natural language and the output is the executable test scripts. Figure \ref{fig:systemdesign} also gives the details of different sub components in each block.
 
 \section{Implementation of the Tool}
 This section describes the implementation of various blocks defined in the previous section.
 
 \subsection{Implementation in Eclipse Modeling Edition}
 \subsubsection{Metamodels Developed}
-This section explains in detail about the different metamodels that are developed for the implemention of the tool. The metamodels are developed using the Eclipse Modeling Project \cite{eclipse}.
+This section explains in detail about the different metamodels that are developed for the implementation of the tool. The metamodels are developed using the Eclipse Modeling Project \cite{eclipse}.
 \begin{figure}[htb!]
 \centering
 \fbox{\includegraphics[width=0.7\textwidth]{content/images/Chapter5/PetriNetMetaModel}}
@@ -92,8 +92,8 @@ The tool implementation described in the next sections is explained with the hel
 \cmidrule{2-8}          & \multicolumn{7}{l|}{5. The LKS steers the vehicle.} \\
 \cmidrule{2-8}          & \multicolumn{7}{l|}{6. The vehicle is moving through a road under repair.} \\
     \midrule
-    \multicolumn{1}{|l|}{\multirow{4}[8]{*}{\textbf{Specific \newline{} Alternative Flows}}} & \multicolumn{7}{l|}{1.1 IF Vehicle Speed less than 15 kmph THEN deactivate LMS system with audio alert.} \\
-\cmidrule{2-8}          & \multicolumn{7}{l|}{3.1 IF the departure is unintentional THEN create audio alert and deactivate LMS sytem.} \\
+    \multicolumn{1}{|l|}{\multirow{4}[8]{*}{\textbf{Specific \newline{} Alternative Flows}}} & \multicolumn{7}{l|}{1.1 IF Vehicle Speed less than 15 kmph THEN deactivate LMS system with an audio alert.} \\
+\cmidrule{2-8}          & \multicolumn{7}{l|}{3.1 IF the departure is unintentional THEN create an audio alert and deactivate LMS system.} \\
 \cmidrule{2-8}          & \multicolumn{7}{l|}{5.1 IF the driver manually takes over THEN raise an alert and deactivate LKS.} \\
 \cmidrule{2-8}          & \multicolumn{7}{l|}{6.1 IF the road markers are unclear THEN raise an alert and deactivate LMS} \\
     \bottomrule
@@ -124,7 +124,7 @@ The next important step is to provide the input to the tool in the form of \gls{
 \end{figure}
 
 
-To give inputs to the tool, we should create an instance of the \gls{rucm} metamodel. The running example is given as input for the tool and the structure of the user input can be seen in the Figure \ref{fig:input}.
+To give inputs to the tool, we should create an instance of the \gls{rucm} metamodel. The running example is given as input for the tool and the structure of the user input can be seen in Figure \ref{fig:input}.
 
 \subsubsection{Model Transformations}
 This section describes how the \gls{ucs} in \gls{rucm} metamodel is converted into an integrated Petri Net. Model transformations, which are the core of the MDSE technique, are used for this purpose.
@@ -136,7 +136,7 @@ Once this transformation is executed, we get a collection of Sub Petri Nets. The
 The output of the above transformation yields an integrated Petri Net. In order to make this output compatible with other Petri Net tools, the available Petri Net is converted into a standard xml file called \gls{pnml}PNML. This transformation from Petri Net metamodel to textual representation is done using \gls{m2t} transformation implemented in Xpand language \cite{eclipsem2t}. Appendix xxx gives the details of this implementation. A graphical representation of the intermediate output for our running example in PIPE2 tool is shown in Figure \ref{fig:integratedpn}.
 
 \subsection{Implementation in PIPE2 tool}
-This block generates the reachability graph. The integrated Petri Net in the form of the xml file is given as input to the PIPE2 tool. From this, reachablibility graph is generated using the corresponding menu in the tool. In order to use this graph in the subsequent steps, it is exported as an xml file. For this, a package is added to the existing tool and this exports the xml file with the template shown in appendix xxx. The implementation is done using \gls{jdk}.
+This block generates the reachability graph. The integrated Petri Net in the form of the xml file is given as input to the PIPE2 tool. From this, the reachability graph is generated using the corresponding menu in the tool. In order to use this graph in the subsequent steps, it is exported as an xml file. For this, a package is added to the existing tool and this exports the xml file with the template shown in appendix xxx. The implementation is done using \gls{jdk}.
 
 \subsection{Implementation in \gls{jdk} environment}
 This block is responsible for the generation of test specifications and test scripts. Inputs to this section are the Reachability Graph and the \gls{pnml} file. The test specification is generated by identifying the reachable paths from the Reachability Graph and then the conditions from the \gls{pnml} file are added. For identifying all reachable paths, an \textit{All Path Search} is done from initial state to tangible states using \textit{Depth First Search Algorithm}.
@@ -148,4 +148,4 @@ This block is responsible for the generation of test specifications and test scr
 \label{fig:testscript}
 \end{figure}
 
-Once a test specification is ready, each test case in the test specification is elicited out and the test steps for the test cases are generated using an implementation similar to Lookup table. This Lookup table maps each test step to a package predefined in python and finally executable test cases are generated in python. Figure \ref{fig:testscript} shows a generated test script for one of the test cases of our running example. The entire implementation is done in \gls{jdk} using Eclipse Java Standard Edition.
+Once a test specification is ready, each test case in the test specification is elicited out and the test steps for the test cases are generated using an implementation similar to a Lookup table. This Lookup table maps each test step to a package predefined in python and finally, executable test cases are generated in python. Figure \ref{fig:testscript} shows a generated test script for one of the test cases of our running example. The entire implementation is done in \gls{jdk} using Eclipse Java Standard Edition.
