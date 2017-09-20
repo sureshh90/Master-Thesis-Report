@@ -1,90 +1,48 @@
 \chapter{Appendix}
 
 
-\section{Großbeispiele}
-\subsection{Stanford CoreNLP XML Ausgabe}\label{subsec:corenlp_xml_beispiel}
-\begin{lstlisting}
-<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+\section{Model-to-Text Transformational Rules for Petri Net to PNML file}
+\subsection{Model-to-Text Transformational Rules for Petri Net to PNML file}\label{m2trules}
+\begin{minted}{xtend}
+
+«IMPORT PetriNetMetaModel»
+
+/*To create net details in the corresponding tag in PNML*/
+«DEFINE main FOR PetriNet»
+«FILE "IntegratedPetriNet.xml"»<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
 <net id="Net-One" type="P/T net">
 <token id="Default" enabled="true" red="0" green="0" blue="0"/>
-<place id="P0">
-<graphics>
-<position x="165.0" y="90.0"/>
-</graphics>
+«EXPAND placedetails FOREACH place»
+«EXPAND transdetails FOREACH transition»
+«EXPAND arcdetails FOREACH arc»</net>
+</pnml>
+«ENDFILE»	
+«ENDDEFINE»
+
+/*To create the place details in the corresponding tag in PNML*/
+«DEFINE placedetails FOR Place»<place id="«this.Name»">
 <name>
-<value>P0</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
+<value>«this.Name»</value>
 </name>
 <initialMarking>
-<value>Default,1</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
+<value>Default,«this.Tokens»</value>
 </initialMarking>
 <capacity>
-<value>0</value>
+<value>«this.Tokens»</value>
 </capacity>
 </place>
-<place id="P1">
-<graphics>
-<position x="315.0" y="90.0"/>
-</graphics>
+«ENDDEFINE»
+
+/*To create transition details in the corresponding tag in PNML*/
+«DEFINE transdetails FOR Transition»<transition id="«this.Name»">
 <name>
-<value>P1</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
+<value>«this.Name»</value>
 </name>
-<initialMarking>
-<value>Default,1</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
-</initialMarking>
-<capacity>
-<value>0</value>
-</capacity>
-</place>
-<place id="P2">
-<graphics>
-<position x="240.0" y="285.0"/>
-</graphics>
-<name>
-<value>P2</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
-</name>
-<initialMarking>
-<value>Default,0</value>
-<graphics>
-<offset x="0.0" y="0.0"/>
-</graphics>
-</initialMarking>
-<capacity>
-<value>0</value>
-</capacity>
-</place>
-<transition id="T0">
-<graphics>
-<position x="225.0" y="180.0"/>
-</graphics>
-<name>
-<value>T0</value>
-<graphics>
-<offset x="-5.0" y="35.0"/>
-</graphics>
-</name>
-<orientation>
-<value>90</value>
-</orientation>
 <rate>
 <value>1.0</value>
 </rate>
 <timed>
-<value>false</value>
+<value>«if this.Name.contains("T_Dummy_End") then "true" else "false"»</value>
 </timed>
 <infiniteServer>
 <value>false</value>
@@ -93,46 +51,207 @@
 <value>1</value>
 </priority>
 </transition>
-<arc id="P0 to T0" source="P0" target="T0">
-<graphics/>
-<inscription>
-<value>Default,1</value>
-<graphics/>
-</inscription>
-<tagged>
-<value>false</value>
-</tagged>
-<arcpath id="000" x="185" y="114" curvePoint="false"/>
-<arcpath id="001" x="231" y="186" curvePoint="false"/>
-<type value="normal"/>
-</arc>
-<arc id="P1 to T0" source="P1" target="T0">
-<graphics/>
-<inscription>
-<value>Default,1</value>
-<graphics/>
-</inscription>
-<tagged>
-<value>false</value>
-</tagged>
-<arcpath id="000" x="316" y="112" curvePoint="false"/>
-<arcpath id="001" x="241" y="187" curvePoint="false"/>
-<type value="normal"/>
-</arc>
-<arc id="T0 to P2" source="T0" target="P2">
-<graphics/>
-<inscription>
-<value>Default,1</value>
-<graphics/>
-</inscription>
-<tagged>
-<value>false</value>
-</tagged>
-<arcpath id="000" x="236" y="196" curvePoint="false"/>
-<arcpath id="001" x="249" y="282" curvePoint="false"/>
-<type value="normal"/>
-</arc>
-</net>
-</pnml>
+«ENDDEFINE»
 
-\end{lstlisting}
+
+/*To create arc details in the corresponding tag in PNML*/
+«DEFINE arcdetails FOR Arc»<arc id="
+«if this.Type.contains("Input") then this.place.Name else this.transition.Name» to 
+«if this.Type =="Input" then this.transition.Name else this.place.Name»" source="
+«if this.Type =="Input" then this.place.Name else this.transition.Name»" target="
+«if this.Type =="Input" then this.transition.Name else this.place.Name»">
+<inscription>
+<value>Default,1</value>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<type value="normal"/>
+</arc>
+«ENDDEFINE»
+\end{minted}
+
+\section{Model-to-Model Transformational Rules for Sub Petri Nets to Integrated Petri Nets conversion}\label{m2mrules}
+\begin{minted}{qvto}
+modeltype MMA uses "http://www.example.org/PetriNetMetaModel";
+modeltype MMB uses "http://www.example.org/PetriNetMetaModel";
+
+transformation PNtoPNTransformation(in Source: MMA, out Target: MMB);
+
+main() {
+	Source.rootObjects()[PetriNet] -> map PetriNetToPetriNet();
+}
+
+mapping PetriNet :: PetriNetToPetriNet() : PetriNet {
+	/*This section makes calls to the different mappings 
+	  required to integrate the sub Petri Nets*/
+	result.place :=self.place -> map CopyOtherPlaceToNewPlace();
+	result.place +=self.place -> map InputDummyPlaceToNewPlace();
+	result.transition := self.transition -> map TransitionToNewTransition();
+	
+	result.arc := self.arc -> map InputArcToNewInputArc();
+	result.arc += self.arc -> map InputArcToNewPlace();
+	result.arc += self.arc -> map OutputArcToNewOutputArc();
+	
+	result.arc += self.arc -> map ExceptionInputArcToEpisodePlace();
+	result.arc += self.arc -> map ConditionElseInputArcToEpisodePlace();
+	result.arc += self.arc -> map ConditionElseOutputArcToEpisodePlace();
+}
+
+/*This following section contains the different mappings rules are 
+		implemented according to their constraints*/
+mapping Arc :: ConditionElseOutputArcToEpisodePlace() : Arc
+when {self.Type.equalsIgnoreCase("Output") 
+	and self.place.Name.startsWith("I_Dummy_Place")
+	and self.transition.Name.equalsIgnoreCase("T_Dummy_Else") } {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.Type := self.Type;
+      
+   var var_Append: String;
+   var_Append:= self.place.Name.at(15);
+   var var_Next:Integer;
+   var_Next:= var_Append.toInteger()+1;
+   
+   var temp : Place;
+   temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_"+var_Append));
+   result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+}
+
+mapping Arc :: ConditionElseInputArcToEpisodePlace() : Arc
+when {self.Type.equalsIgnoreCase("Input") 
+	and self.place.Name.startsWith("O_Dummy_Place")
+	and self.transition.Name.equalsIgnoreCase("T_Dummy_Else") } {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.Type := self.Type;
+     
+   var var_Append: String;
+   var_Append:= self.place.Name.at(15);
+   var var_Next:Integer;
+   var_Next:= var_Append.toInteger()+1;
+   
+   var temp : Place;
+   temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_"+var_Next.toString()));
+   result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+ }
+
+mapping Arc :: ExceptionInputArcToEpisodePlace() : Arc
+when {self.Type.equalsIgnoreCase("Input") 
+	and self.place.Name.startsWith("I_E_Dummy") } {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.Type := self.Type;
+      
+   var var_Append: Integer;
+   var_Append:= self.place.Name.at(11).toInteger()+1;
+   var temp : Place;   
+   var var_Count:Integer;
+   var var_Set:Collection(Place);
+   var_Set:= self.place.container().allSubobjectsOfType(Place)
+		->select(Name.toString().startsWith("I_Dummy_Place_"));
+   var_Count := var_Set->size();
+   
+   var var_Next:Integer;
+   var_Next:= var_Append;
+	
+	if(var_Next = var_Count)then{
+	temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_E"));
+	result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+	}else{
+	temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_"+var_Append.toString()));   
+	result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+	}endif;  
+}
+	
+mapping Arc :: OutputArcToNewOutputArc() : Arc
+when {self.Type.equalsIgnoreCase("Output") 
+	and  self.place.Name.startsWith("O_Dummy_Place") } {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.Type := self.Type;  
+   
+    var var_Count:Integer;
+    var var_Set:Collection(Place);
+    var_Set:= self.place.container().allSubobjectsOfType(Place)
+			->select(Name.toString().startsWith("I_Dummy_Place_"));
+    var_Count := var_Set->size();
+  
+    var var_Append: String;
+    var_Append:= self.place.Name.at(15);
+	if(var_Append.equalsIgnoreCase("S"))then{
+	var_Append := 1.toString();
+	var temp : Place;
+	temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString()
+		.startsWith("I_Dummy_Place_"+var_Append.toString()));
+	result.place := temp.resolveoneIn(Place :: InputDummyPlaceToNewPlace, Place);
+	}else{
+	var var_Next:Integer;
+	var_Next:= var_Append.toInteger()+1;
+	var temp : Place;
+   
+	if(var_Next = var_Count)then{
+	temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_E"));
+	result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+	}else{   
+	temp := self.place.container().allSubobjectsOfType(Place)
+		->any(Name.toString().startsWith("I_Dummy_Place_"+var_Next.toString()));
+	result.place := temp.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+	}endif;
+	}endif;     
+}
+
+mapping Arc :: InputArcToNewPlace() : Arc
+when {(self.Type.equalsIgnoreCase("Input") 
+	and self.place.Name.startsWith("I_Dummy_Place"))} {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.place := self.place.resolveoneIn( Place :: InputDummyPlaceToNewPlace, Place);
+   result.Type := self.Type;      
+}
+
+mapping Arc :: InputArcToNewInputArc() : Arc
+when {(self.Type.equalsIgnoreCase("Input") 
+	and not self.place.Name.startsWith("I_Dummy_Place") 
+	and not self.place.Name.startsWith("I_E_Dummy") 
+	and not self.place.Name.startsWith("O_Dummy_Place")) 
+	or (self.Type.equalsIgnoreCase("Output") 
+	and not (self.place.Name.startsWith("O_Dummy_Place")
+	or self.place.Name.startsWith("I_Dummy_Place")))} {
+   result.Weight := self.Weight;
+   result.transition := self.transition
+			.resolveoneIn(Transition :: TransitionToNewTransition, Transition);
+   result.place := self.place.resolveoneIn(Place :: CopyOtherPlaceToNewPlace, Place);
+   result.Type := self.Type;      
+}
+
+mapping Transition :: TransitionToNewTransition() : Transition {
+   result.Name:=self.Name;         
+}	
+	
+mapping Place :: InputDummyPlaceToNewPlace() : Place
+when {self.Name.startsWith("I_Dummy_Place")} {
+   result.Tokens:=self.Tokens;
+   result.Name:=  "P" + self.Name.toString().at(15);      
+}
+
+mapping Place :: CopyOtherPlaceToNewPlace() : Place 
+when {not (self.Name.startsWith("O_Dummy_Place")
+ 	or self.Name.startsWith("I_Dummy_Place")
+ 	or self.Name.startsWith("I_E_Dummy") )}{
+   result.Tokens:=self.Tokens;
+   result.Name:=  self.Name;     
+}			
+\end{minted}
+

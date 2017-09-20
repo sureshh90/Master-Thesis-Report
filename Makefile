@@ -41,7 +41,7 @@ clean:
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
 final: $(PDF)
 	thumbpdf $(PDF)
-	$(pdflatex) $(MASTER_TEX)
+	$(pdflatex)  $(MASTER_TEX)
 
 mrproper: clean
 	rm -f *~
