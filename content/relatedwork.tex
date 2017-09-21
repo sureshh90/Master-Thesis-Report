@@ -6,14 +6,10 @@ The foundation for every research work is provided by other related research wor
 \section{Related Work}
 This section provides an overview of already existing research and approaches in the domain of automatic test case generation. It also describes the way in which the proposed approach differs from the already existing approaches and how the disadvantages of the already existing approaches are eliminated. These related research works are grouped according to the type of inputs needed for test case generation. 
  
-\subsection{Model Based Testing}
+\subsection{Model Based Testing Related}
 The following section describes the related research for automatic test case generation using a formal model of the requirements as an input artifact. Most of these approaches use \gls{uml} diagrams as a formal model.
 
 Shirole et. al. \cite{shirole2013uml} gives an overview of different existing methodologies for test case generation from \gls{uml} models. Most of these approaches need the requirements to be converted into \gls{uml} behavioral models like state-charts (\cite{ryser1999scenario}, \cite{bandyopadhyay2009test}), sequence diagrams (\cite{nebut2003requirements}, \cite{linzhang2004generating}, \cite{briand2002uml}) and activity diagrams (\cite{nebut2006automatic}, \cite{nayak2012synthesis}).  Some of these approaches are elaborated below.
-
-Badri et. al. \cite{badri2003use} proposes a technique of generating test cases from use cases and collaboration diagrams. The requirements are first manually converted to a use case model from which the corresponding collaboration diagrams are created. Collaboration diagrams are defined using a formal language called Collaboration Description Language, which provides a textual representation for the diagrams and subsequently test cases are generated from them.
-
-The authors Nebut et. al. \cite{nebut2003requirements} takes use case diagrams and sequence diagrams as an input artifact to generate test cases. In order to create test cases along with test input data, the use cases are modeled with formalized expression. Here in this technique, the pre and post conditions and other relationships are defined with the help of logical expressions. Finally, for test case generation, the use case parameters are initialized with inputs and the logical expressions are solved to derive the test cases and along with the corresponding inputs.
 
 Tahat et. al. \cite{tahat2001requirement} proposed a technique to generate test cases from requirements defined in \gls{sdl} (\cite{algayres2012goal}, \cite{bochmann1997automating}, \cite{bromstrup1995tesdl}). Initially, each requirement is first converted into a \gls{sdl} system model and then a combined \gls{sdl} model for the entire set of requirements is created manually. This combined model is converted into \gls{efsm}. This acts as an input artifact for the test case generation process.
 
@@ -21,7 +17,7 @@ The drawbacks of the above approaches are as follows. The creation of formal mod
 
 Our work differs from all the above mentioned methodologies in that it does not need a formal model either for test creation or for obtaining test data and is completely automated that it does not require any manual intervention in any stage of test case generation.
 
-\subsection{Natural Language Processing Based}
+\subsection{Natural Language Processing Related}
 Different approaches that generate test case using \gls{nlp} techniques are present but mostly these methods require additional behavioral model inputs like state diagrams \cite{ryser1999scenario}, activity diagrams \cite{hasling2008model}, labeled transition diagram \cite{katara2006making} or they need the provision of additional inputs such as test data or manual test derivation \cite{bertolino2003use}. There are also several other approaches existing (\cite{frohlich2000automated}, \cite{yue2010automated}, \cite{yue2013facilitating}) for generating \gls{uml} models from \gls{nl} requirements. They can also be easily adapted for test case generation.
 
 The approach proposed by Kulkarni and Joglekar \cite{kulkarni2014generating} makes use of \gls{nlp} tools to parse the requirements written in natural language and convert them into graph-based structures called Knowledge Representation. This graph is then analyzed to create test cases. The objective of authors Ryser et. al. \cite{ryser1999practical} is to create system test cases from scenarios expressed in \gls{nl}. But since scenarios described in natural language tend to be more ambiguous, an intermediate formal representation is created. State Machines are used as a formal representation, which are then used for test case generation.
@@ -30,7 +26,7 @@ Barros et. al. \cite{barros2011ucscnl} makes use of use case specifications to g
 
 Our model makes use of \gls{nl} requirements as inputs but does not require the formal intermediate \gls{uml} models and presence of domain experts to verify these models. Instead, it is a completely automatic process where a \gls{nl} requirement input results in corresponding executable test scripts.  
 
-\subsection{Keyword Driven Testing}
+\subsection{Keyword Driven Testing Related}
 \gls{kdt}, also called Table Driven Testing or Action Word Testing, is a testing methodology which defines keywords to describe operations and actions. It is greatly suited for test automation and there exists a variety of approaches that can generate executable test scripts. Even though the following literatures have not directly contributed to the test case generation in our work, they were of immense help in defining a test script generation methodology.
 
 Tang et. al. \cite{tang2008towards} has proposed a methodology in which test cases can be derived for \gls{kdt}. This technique even produces test scripts suitable for different test applications or \glspl{sut} under different environments. Keywords identify the atomic operations in test execution and are very much dependent on their application. For example, \textit{Click} and \textit{Connect} are the keywords for GUI and Database Applications respectively. Test cases are created by the users by specifying a sequence of keywords i.e. the actions and these test cases are then converted into test scripts which act as an input to the test driver specific to an environment.
@@ -38,7 +34,7 @@ Tang et. al. \cite{tang2008towards} has proposed a methodology in which test cas
 Little and Miller \cite{little2006translating} proposed a similar approach where keyword commands are converted to executable test scripts. Hametner et. al. \cite{hametner2012agile} suggested a test case generation technique for \gls{kdt} in the field of industrial automation systems. Here, test engineers write test cases manually using predefined keywords and a predefined tabular template in a high abstraction level. The automated generation of test cases is not supported in this technique but can be easily adapted. Thummalapenta et. al. \cite{thummalapenta2012automating} put forth a technique in which test scripts can be created from manually written test cases which consist sequences of tuples like \textit{action-target-data}.
 
 
-\subsection{Other important approaches}
+\subsection{Restricted Natural Language Related}
 This section describes an approach which is a hybrid between different approaches seen above. Wang et. al., 2015 \cite{wang2015automatic} describes a semi-automatic approach for generating test cases. The approach is labeled as \gls{umtg}. The requirements are specified in a restricted natural language in a defined template called \gls{rucm} \cite{yue2015rtcm}. They are used as one of the inputs whereas the other input is the domain model of the system which has to be manually developed. This approach also needs the restrictions of the model to be modeled manually as \gls{ocl} constraints. The workflow of this approach consists of four manual stages out of its total seven stages. Zhang et. al., 2014 \cite{yue2015rtcm} proposes another method for test case generation using RUCM called \gls{rtcm} which again uses textual transformations with less priority to test data generation. 
 
 \section{Utilized Software Tools}
@@ -51,8 +47,8 @@ Eclipse Modeling Project \cite{eclipse} is a collection of tools and frameworks 
 
 \begin{figure}[htb!]
 \centering
-\fbox{\includegraphics{content/images/Chapter3/figure1}}
-\caption{Overview of different languages in QVT}
+\fbox{\includegraphics[scale=0.55]{content/images/Chapter3/figure1}}
+\caption{Overview of different languages in QVT \cite{eclipseqvt}}
 \label{fig:overview}
 \end{figure}
 

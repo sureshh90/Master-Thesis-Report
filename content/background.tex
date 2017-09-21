@@ -1,6 +1,6 @@
 % !TeX spellcheck = de_DE
 \chapter{Background}\label{background} 
-This chapter gives a short introduction to topics regarding Agile processes and their definitions, Model Driven Architecture, Unified Modeling Language and Petri Nets. Basic knowledge in these topics helps us to appreciate the various design and implementation decisions taken in Chapter 3 and 4. This chapter also acts a guide to understand the various terminologies used throughout this work.
+This chapter gives a short introduction to topics regarding Agile processes and their definitions, Model Driven Architecture, Unified Modeling Language and Petri Nets. Basic knowledge in these topics helps us to appreciate the various design and implementation decisions taken in Chapter \ref{relatedwork} and \ref{proposedsolution}. This chapter also acts a guide to understand the various terminologies used throughout this work.
 
 \section{Evolution of Agile Software Development}
 Agile Software Development was introduced in the year 2001 by Agile Alliance to keep up with growing demands of the software industry. Traditional software development methods like Waterfall model couldn’t deliver the expected results on circumstances of frequent requirement changes and increased software complexity. The main reason that can be attributed to the failure of traditional development methods is the single flow of sequential development phases without any iterative phases.
@@ -30,7 +30,7 @@ One of the motivations for \gls{mda} approach is that the developed software wil
 
 \begin{figure}[htb!]
 \centering
-\fbox{\includegraphics[width=0.8\textwidth]{content/images/Chapter2/Overview_MDA.png}}
+\fbox{\includegraphics[width=0.8\textwidth]{content/images/Chapter2/Overview_MDA.pdf}}
 \caption{Overview of transformations in MDA \cite{cerny2015separation}}
 \label{fig:Overview_MDA}
 \end{figure}
@@ -52,9 +52,9 @@ Activity Diagram is one example of behavioral diagrams which illustrates the seq
 
 \begin{figure}[htb!]
   \centering
-    \subfloat[]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/ClassDiagram.png} \label{fig:umldiagrams_subfigA}}
-   \subfloat[]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/ActivityDiagram.png} \label{fig:umldiagrams_subfigB}}
-	\caption{An example of a) UML Class Diagram for personal details b) UML Activity Diagram for user authentication.}
+    \subfloat[A UML Class Diagram]{\includegraphics[width=0.45\textwidth,frame]{content/images/Chapter2/ClassDiagram.pdf} \label{fig:umldiagrams_subfigA}}
+   \subfloat[A UML Activity Diagram]{\includegraphics[width=0.45\textwidth,frame]{content/images/Chapter2/ActivityDiagram.pdf} \label{fig:umldiagrams_subfigB}}
+	\caption{Examples of UML diagrams.}
 \label{fig:umldiagrams}
 \end{figure}
 
@@ -70,8 +70,8 @@ A Petri Net is an example of directed, bipartite and weighted graph in between t
 
 \begin{figure}[htb!]
 \centering
-\fbox{\includegraphics[width=0.5\textwidth]{content/images/Chapter2/Petrinetwithlabels.png}}
-\caption{An example of a Petri Net}
+\fbox{\includegraphics[width=0.6\textwidth]{content/images/Chapter2/Petrinetwithlabels.pdf}}
+\caption{An example of Petri Net}
 \label{fig:petrinet_example}
 \end{figure}
 
@@ -121,9 +121,9 @@ One of the main features of Petri Net is the ability to perform analysis on mode
 
 \begin{figure}[htb!]
   \centering
-    \subfloat[before transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter2/Petrineta.png} \label{fig:petrinet_subfigA}}
-   \subfloat[after transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter2/Petrinetb.png} \label{fig:petrinet_subfigB}}
-	\caption{Concept of transition in a Petri Net.}
+    \subfloat[before transition]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/Petrineta.pdf} \label{fig:petrinet_subfigA}}
+   \subfloat[after transition]{\includegraphics[width=0.4\textwidth,frame]{content/images/Chapter2/Petrinetb.pdf} \label{fig:petrinet_subfigB}}
+	\caption{Concept of transitions in a Petri Net.}
 \label{fig:petridiagrams}
 \end{figure}
 

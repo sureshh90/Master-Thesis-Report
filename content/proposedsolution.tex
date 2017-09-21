@@ -1,11 +1,11 @@
 % !TeX spellcheck = de_DE
-\chapter{The Proposed Solution}
+\chapter{The Proposed Solution}\label{proposedsolution} 
 This chapter gives a detailed explanation of the proposed approach and the various steps involved in it. It elaborates on the theoretical design behind the conversion of agile requirements described in natural language into formal models and the subsequent test case generation methodologies.
  
 The first section of this chapter gives an overview of the proposed solution and the different steps involved in it. The following sections elaborate the steps defined in the overview and the justification on which the theoretical ideas are chosen.
 
 
-\section{Overview of the solution}
+\section{Overview of the Solution}
 The proposed solution of test script generation from requirements can be broadly classified into four important steps.
 \begin{enumerate}
 \item Requirements in a Restricted Natural Language.
@@ -17,7 +17,7 @@ Figure \ref{fig:proposed_solution2} shows the skeleton of the proposed work. The
 
 \begin{figure}[]
 \centering
-\fbox{\includegraphics[width=0.9\textwidth]{content/images/Chapter4/proposed_solution.png}}
+\fbox{\includegraphics[width=0.9\textwidth]{content/images/Chapter4/proposed_solution.pdf}}
 \caption{An overview of the proposed solution}
 \label{fig:proposed_solution2}
 \end{figure}
@@ -95,7 +95,7 @@ One of the main objectives of this work is to establish a formal model for the r
 The transformation method from \gls{ucs} to PN consists of three main steps.
 
 \begin{enumerate}
-\item The first step defines mapping rules that translate the \gls{rucm} elements into corresponding Petri Net elements according to transformation rules defined in Figure \ref{fig:rules}. The expected result of this process is a Sub Petri Net which consists of at least one place, transition and arc.
+\item The first step defines mapping rules that translate the \gls{rucm} elements into corresponding Petri Net elements according to transformation rules defined in Appendix \ref{m2mrulesmain}. The expected result of this process is a Sub Petri Net which consists of at least one place, transition and arc.
 \item The second step is to compose the sub Petri Nets generated from the previous step into a whole Petri Net. This is done by the fusion of output and input dummy places between sequential sub Petri Nets or by integrating Petri Nets of other referenced \glspl{ucs}.
 \item The third step is to generate an integrated Petri Net from the partial Petri Nets generated for each \gls{ucs}. According to \gls{rucm} specification, each \gls{ucs} can reference another \gls{ucs} and hence the need arises to transform referenced \gls{ucs} into a Petri Net. This step integrates the partial Petri Nets into an Integrated Petri Net and hence it reflects the properties of the synthesized partial Petri Nets.
 \end{enumerate}
@@ -117,7 +117,7 @@ The different transformations and metamodels are detailed in Chapter \ref{implem
    
      \subfloat[third transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter4/third.png} \label{fig:rg_subfigC}}
    \subfloat[fourth transition]{\includegraphics[width=0.3\textwidth,frame]{content/images/Chapter4/fourth.png} \label{fig:rg_subfigD}}
-	\caption{Concept of Reachability.}
+	\caption{Concept of reachability.}
 \label{fig:rgconcept}
 \end{figure}
 

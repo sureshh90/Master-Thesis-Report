@@ -1,77 +1,23 @@
 \chapter{Appendix}
+\section{M2M Transformational Rules from RUCM to Petri Net}\label{m2mrulesmain}
+
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics{content/images/Appendix/figg1}}
+\caption{M2M Rules for transformation from RUCM to Petri Net(1/2)}
+\label{fig:m2mrulesdiagram1}
+\end{figure}
 
 
-\section{Model-to-Text Transformational Rules for Petri Net to PNML file}
-\subsection{Model-to-Text Transformational Rules for Petri Net to PNML file}\label{m2trules}
-\begin{minted}{xtend}
-
-«IMPORT PetriNetMetaModel»
-
-/*To create net details in the corresponding tag in PNML*/
-«DEFINE main FOR PetriNet»
-«FILE "IntegratedPetriNet.xml"»<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
-<net id="Net-One" type="P/T net">
-<token id="Default" enabled="true" red="0" green="0" blue="0"/>
-«EXPAND placedetails FOREACH place»
-«EXPAND transdetails FOREACH transition»
-«EXPAND arcdetails FOREACH arc»</net>
-</pnml>
-«ENDFILE»	
-«ENDDEFINE»
-
-/*To create the place details in the corresponding tag in PNML*/
-«DEFINE placedetails FOR Place»<place id="«this.Name»">
-<name>
-<value>«this.Name»</value>
-</name>
-<initialMarking>
-<value>Default,«this.Tokens»</value>
-</initialMarking>
-<capacity>
-<value>«this.Tokens»</value>
-</capacity>
-</place>
-«ENDDEFINE»
-
-/*To create transition details in the corresponding tag in PNML*/
-«DEFINE transdetails FOR Transition»<transition id="«this.Name»">
-<name>
-<value>«this.Name»</value>
-</name>
-<rate>
-<value>1.0</value>
-</rate>
-<timed>
-<value>«if this.Name.contains("T_Dummy_End") then "true" else "false"»</value>
-</timed>
-<infiniteServer>
-<value>false</value>
-</infiniteServer>
-<priority>
-<value>1</value>
-</priority>
-</transition>
-«ENDDEFINE»
+\begin{figure}[htb!]
+\centering
+\fbox{\includegraphics{content/images/Appendix/fig2}}
+\caption{M2M Rules for transformation from RUCM to Petri Net(2/2)}
+\label{fig:m2mrulesdiagram2}
+\end{figure}
 
 
-/*To create arc details in the corresponding tag in PNML*/
-«DEFINE arcdetails FOR Arc»<arc id="
-«if this.Type.contains("Input") then this.place.Name else this.transition.Name» to 
-«if this.Type =="Input" then this.transition.Name else this.place.Name»" source="
-«if this.Type =="Input" then this.place.Name else this.transition.Name»" target="
-«if this.Type =="Input" then this.transition.Name else this.place.Name»">
-<inscription>
-<value>Default,1</value>
-</inscription>
-<tagged>
-<value>false</value>
-</tagged>
-<type value="normal"/>
-</arc>
-«ENDDEFINE»
-\end{minted}
-
-\section{Model-to-Model Transformational Rules for Sub Petri Nets to Integrated Petri Nets conversion}\label{m2mrules}
+\section{Implementation of M2M Transformational Rules for Sub Petri Nets to Integrated Petri Nets Conversion}\label{m2mrules}
 \begin{minted}{qvto}
 modeltype MMA uses "http://www.example.org/PetriNetMetaModel";
 modeltype MMB uses "http://www.example.org/PetriNetMetaModel";
@@ -255,3 +201,72 @@ when {not (self.Name.startsWith("O_Dummy_Place")
 }			
 \end{minted}
 
+
+\section{Implementation of M2T Transformational Rules for Petri Net to PNML Conversion}\label{m2trules} 
+\begin{minted}{xtend}
+
+«IMPORT PetriNetMetaModel»
+
+/*To create net details in the corresponding tag in PNML*/
+«DEFINE main FOR PetriNet»
+«FILE "IntegratedPetriNet.xml"»<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+«EXPAND placedetails FOREACH place»
+«EXPAND transdetails FOREACH transition»
+«EXPAND arcdetails FOREACH arc»</net>
+</pnml>
+«ENDFILE»	
+«ENDDEFINE»
+
+/*To create the place details in the corresponding tag in PNML*/
+«DEFINE placedetails FOR Place»<place id="«this.Name»">
+<name>
+<value>«this.Name»</value>
+</name>
+<initialMarking>
+<value>Default,«this.Tokens»</value>
+</initialMarking>
+<capacity>
+<value>«this.Tokens»</value>
+</capacity>
+</place>
+«ENDDEFINE»
+
+/*To create transition details in the corresponding tag in PNML*/
+«DEFINE transdetails FOR Transition»<transition id="«this.Name»">
+<name>
+<value>«this.Name»</value>
+</name>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>«if this.Name.contains("T_Dummy_End") then "true" else "false"»</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+«ENDDEFINE»
+
+
+/*To create arc details in the corresponding tag in PNML*/
+«DEFINE arcdetails FOR Arc»<arc id="
+«if this.Type.contains("Input") then this.place.Name else this.transition.Name» to 
+«if this.Type =="Input" then this.transition.Name else this.place.Name»" source="
+«if this.Type =="Input" then this.place.Name else this.transition.Name»" target="
+«if this.Type =="Input" then this.transition.Name else this.place.Name»">
+<inscription>
+<value>Default,1</value>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<type value="normal"/>
+</arc>
+«ENDDEFINE»
+\end{minted}
