@@ -97,7 +97,7 @@ The transformation method from \gls{ucs} to PN consists of three main steps.
 \begin{enumerate}
 \item The first step defines mapping rules that translate the \gls{rucm} elements into corresponding Petri Net elements according to transformation rules defined in Appendix \ref{m2mrulesmain}. The expected result of this process is a Sub Petri Net which consists of at least one place, transition and arc.
 \item The second step is to compose the sub Petri Nets generated from the previous step into a whole Petri Net. This is done by the fusion of output and input dummy places between sequential sub Petri Nets or by integrating Petri Nets of other referenced \glspl{ucs}.
-\item The third step is to generate an integrated Petri Net from the partial Petri Nets generated for each \gls{ucs}. According to \gls{rucm} specification, each \gls{ucs} can reference another \gls{ucs} and hence the need arises to transform referenced \gls{ucs} into a Petri Net. This step integrates the partial Petri Nets into an Integrated Petri Net and hence it reflects the properties of the synthesized partial Petri Nets.
+\item The third step is to generate an integrated Petri Net from the partial Petri Nets generated for each \gls{ucs}. According to \gls{rucm} specification, each \gls{ucs} can refer to another \gls{ucs} and hence the need arises to transform referenced \gls{ucs} into a Petri Net. This step integrates the partial Petri Nets into an Integrated Petri Net and hence it reflects the properties of the synthesized partial Petri Nets.
 \end{enumerate}
 
 %\begin{figure}[htb!]
