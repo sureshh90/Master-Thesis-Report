@@ -2,12 +2,13 @@
 \chapter{The Proposed Solution}\label{proposedsolution} 
 This chapter gives a detailed explanation of the proposed approach and the various steps involved in it. It elaborates on the theoretical design behind the conversion of agile requirements described in natural language into formal models and the subsequent test case generation methodologies.
  
-The first section of this chapter gives an overview of the proposed solution and the different steps involved in it. The following sections elaborate the steps defined in the overview and the justification on which the theoretical ideas are chosen.
+The first section of this chapter gives an overview of the proposed solution and the different steps involved in it. The following sections elaborate the steps defined in the overview and the justification on which the theoretical ideas are based.
 
 
 \section{Overview of the Solution}
-The proposed solution of test script generation from requirements can be broadly classified into four important steps.
+The proposed solution of test script generation from requirements can be broadly classified into five important steps.
 \begin{enumerate}
+\item Requirements Elicitation in Agile.
 \item Requirements in a Restricted Natural Language.
 \item Generation of Petri-Nets from Use Case Specifications.
 \item Generation of Reachability/Coverability Graph.
@@ -18,10 +19,14 @@ Figure \ref{fig:proposed_solution2} shows the skeleton of the proposed work. The
 \begin{figure}[]
 \centering
 \fbox{\includegraphics[width=0.9\textwidth]{content/images/Chapter4/proposed_solution.pdf}}
-\caption{An overview of the proposed solution}
+\caption{Overview of the proposed solution}
 \label{fig:proposed_solution2}
 \end{figure}
 
+\section{Requirements Elicitation in Agile}
+The Requirements Engineering process often dictates the quality of the project and hence it plays a vital role in any software development process. Agile method, which relies on iterative development, embraces changing requirements during the software development process. Hence a long and detailed documentation process as in traditional Requirements Engineering process is useless. In the Agile process, one of the frameworks common in the industry is the \textit{Scrum}. Here once the requirements are elicited, they are split into smaller features defined in the form of \textit{User Stories} or \textit{Use Cases}. The choice between the two is dependent on the project since both the representations have its respective pros and cons. This thesis makes use of Use Case for representing requirements. 
+
+Next step is to analyze the elicited requirements for its various properties like atomicity, uniqueness, completeness, consistency and unambiguousness, testability, etc \cite{guru99}. There are approaches (\cite{sarmiento2015analysis}, \cite{calisaya2016analysis})that analyze some of these properties by converting the requirements into formal models and then applying \gls{nlp} techniques. Our proposed approach can also be used to analyze the property \textit{testability} by generating executable test cases directly from the requirements using formal models. In a \gls{sdlc}, it is the imperative to ensure the quality of requirements as early as possible to reduce the cost of software development and to meet the scheduled deadlines and our approach adds to this objective.
 
 \section{Requirements in a Restricted Natural Language}
 The main objective of this approach is to generate test cases directly from requirements specified in natural language. In the industry, one of the important documents used to communicate requirements between the different stakeholders is \glspl{ucs}. In order to reduce the incompleteness and imprecision in \glspl{ucs}, a template with restriction rules are usually used, thereby making it a semi-formal representation. 
@@ -30,12 +35,12 @@ The main objective of this approach is to generate test cases directly from requ
 \gls{rucm} \cite{yue2013facilitating} is one such use case format that provides restriction rules and specific keywords, hence confining the use of natural language for \glspl{ucs}. It also corresponds to a specific metamodel called UCMeta, which facilitates automatic analysis of use cases. The selection of a restricted \gls{nl} template depends upon factors like simplicity, expressive power, better understandability and quality of models derived from it. Experiment results \cite{yue2013facilitating} shows that the template is beneficial and is applicable in various scenarios with the above mentioned characteristics.
 
 \subsection{Restriction Rules and Keywords}
-\gls{rucm} has also defined a list of standard keywords. A short overview of the rules is given below. For example, a conditional logic sentence is defined by the keyword IF-THEN-ELSEIF-ELSE-ENDIF, a concurrency statement by keyword MEANWHILE, condition checking sentences by keyword VALIDATES THAT and iteration sentences by DO-UNTIL. RESUME STEP keyword is used when the alternative flow should return back to its reference flow. Similarly, ABORT keyword is used to describe an exit action due to some exceptions.  The complete set of keywords can be found in the template reference given in \cite{yue2013facilitating}. In addition to the keywords, \gls{rucm} also specifies restriction rules that are detailed in \cite{yue2013facilitating}. A table describing the basic elements of a \gls{rucm} template is given in Table \ref{tab:rucmtemplate}.
+\gls{rucm} has also defined a list of standard keywords. A short overview of the rules is given below. For example, a conditional logic sentence is defined by the keyword IF-THEN-ELSEIF-ELSE-ENDIF, a concurrency statement by the keyword MEANWHILE, condition checking sentences by the keyword VALIDATES THAT and iteration sentences by DO-UNTIL. RESUME STEP keyword is used when the alternative flow should return back to its reference flow. Similarly, ABORT keyword is used to describe an exit action due to some exceptions.  The complete set of keywords can be found in the template reference given in \cite{yue2013facilitating}. In addition to the keywords, \gls{rucm} also specifies restriction rules that are detailed in \cite{yue2013facilitating}. A table describing the basic elements of a \gls{rucm} template is given in Table \ref{tab:rucmtemplate}.
 
 % Table generated by Excel2LaTeX from sheet 'Sheet1'
 \begin{table}[htbp]
   \centering
-  \caption{RUCM Use Case Template}
+  \caption{RUCM Use Case Template \cite{yue2013facilitating}}
 	\begin{adjustbox}{width=1\textwidth}
     \begin{tabular}{|l|l|l|l|l|l|l|l|}
     \toprule
